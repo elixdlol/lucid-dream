@@ -6,7 +6,15 @@ namespace TrackBeamParser
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            TracksDataReceiver.StartListening(funcThatWantTheData);
+
+            Console.WriteLine(" Press [enter] to exit.");
+            Console.ReadLine();
+        }
+
+        static void funcThatWantTheData(TrackData data)
+        {
+            Console.WriteLine($"RONEN WAS HERE, track number: {data.TrackNumber}, track angle: {data.TrackAngle}");
         }
     }
 }
