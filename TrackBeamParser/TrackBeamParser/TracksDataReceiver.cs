@@ -20,19 +20,23 @@ namespace TrackBeamParser
         {
             var factory = new ConnectionFactory()
             {
-                HostName = "172.16.20.157",
-                UserName = "yakir",
-                Password = "1114",
+                HostName = "172.16.20.161",
+                UserName = "rutush",
+                Password = "123456",
             };
 
             IConnection connection = factory.CreateConnection();
             IModel channel = connection.CreateModel();
+
+            channel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
 
             channel.QueueDeclare(queue: "track",
                                  durable: false,
                                  exclusive: false,
                                  autoDelete: false,
                                  arguments: null);
+
+            channel.QueueBind(queue: "track", exchange: "TrackData", routingKey: "");
 
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (model, ea) =>
@@ -43,8 +47,8 @@ namespace TrackBeamParser
             };
 
             channel.BasicConsume(queue: "track",
-                                    autoAck: true,
-                                    consumer: consumer);
+                                 autoAck: true,
+                                 consumer: consumer);
         }
 
         public static void StopLintening()

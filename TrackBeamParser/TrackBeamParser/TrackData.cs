@@ -6,7 +6,7 @@ namespace TrackBeamParser
 {
     public class TrackData
     {
-        public int TrackNumber;
-        public int TrackAngle;
+        public int trackID;
+        public float relativeBearing;
     }
 }
