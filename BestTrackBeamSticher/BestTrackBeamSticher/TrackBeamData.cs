@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TrackBeamParser
+namespace BestTrackBeamSticher
 {
     public class TrackBeamData
     {

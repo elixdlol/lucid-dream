@@ -15,11 +15,11 @@ namespace TrackBeamParser
             IConnection connection = RabbitMQ.getConnection();
             beamTrackDataChannel = connection.CreateModel();
 
-            beamTrackDataChannel.QueueDeclare(queue: "track",
-                                    durable: false,
-                                    exclusive: false,
-                                    autoDelete: false,
-                                    arguments: null);
+            beamTrackDataChannel.ExchangeDeclare(exchange: "beamTrackData",
+                                                 type: ExchangeType.Fanout,
+                                                 durable: true,
+                                                 autoDelete: false,
+                                                 arguments: null);
         }
 
         public static void sendTrackBeamData(TrackBeamData trackBeamData)
@@ -27,9 +27,9 @@ namespace TrackBeamParser
             byte[] body = Encoding.Default.GetBytes(JsonConvert.SerializeObject(trackBeamData));
 
             beamTrackDataChannel.BasicPublish(exchange: "",
-                                    routingKey: "track",
-                                    basicProperties: null,
-                                    body: body);
+                                              routingKey: "beamTrackData",
+                                              basicProperties: null,
+                                              body: body);
         }
 
         public static void dispose()
