@@ -13,7 +13,7 @@ namespace BestTrackBeamSticher
 
         public static void StartListening(Action<TrackBeamData> funcThatWantTheData)
         {
-            IConnection connection = RabbitMQ.getConnection();
+            IConnection connection = RabbitMQConnection.getConnection();
             trackDataChannel = connection.CreateModel();
 
             trackDataChannel.ExchangeDeclare(exchange: "beamTrackData", type: ExchangeType.Fanout);

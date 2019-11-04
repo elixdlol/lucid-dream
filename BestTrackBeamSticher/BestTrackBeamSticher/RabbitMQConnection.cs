@@ -5,11 +5,11 @@ using System.Text;
 
 namespace BestTrackBeamSticher
 {
-    public static class RabbitMQ
+    public static class RabbitMQConnection
     {
         static IConnection connection;
 
-        static RabbitMQ()
+        static RabbitMQConnection()
         {
             var factory = new ConnectionFactory()
             {

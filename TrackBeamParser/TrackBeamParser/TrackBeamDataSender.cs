@@ -12,7 +12,7 @@ namespace TrackBeamParser
 
         static TrackBeamDataRabbitMQSender()
         {
-            IConnection connection = RabbitMQ.getConnection();
+            IConnection connection = RabbitMQConnection.getConnection();
             beamTrackDataChannel = connection.CreateModel();
 
             beamTrackDataChannel.ExchangeDeclare(exchange: "beamTrackData",
