@@ -13,41 +13,72 @@ namespace lucidDBManager.RabbitMQ
 
         IConnection Connection { get; set; }
 
-        IModel Channel { get; set; }
+        IModel TMAChannel { get; set; }
 
-        EventingBasicConsumer Consumer { get; set; }
+        IModel OwnBoatChannel { get; set; }
+
+        EventingBasicConsumer TMAConsumer { get; set; }
+
+        EventingBasicConsumer OwnBoatConsumer { get; set; }
+
+        DataHandler DataHandler { get; set; }
 
         public RabbitMQReciever()
         {
+            DataHandler = new DataHandler();
             Factory = new ConnectionFactory() { HostName = "localhost" };
             Connection = Factory.CreateConnection();
-            Channel = Connection.CreateModel();
-            Channel.ExchangeDeclare(exchange: "TMA", type: ExchangeType.Fanout);
-            
-            Channel.QueueDeclare("TMA");
-            Channel.QueueBind(queue: "TMA",
+            TMAChannel = Connection.CreateModel();
+            OwnBoatChannel = Connection.CreateModel();
+            TMAChannel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
+            OwnBoatChannel.ExchangeDeclare(exchange: "OwnBoatData", type: ExchangeType.Fanout);
+
+            TMAChannel.QueueDeclare("TMA");
+            TMAChannel.QueueBind(queue: "TMA",
                               exchange: "TrackData",
                               routingKey: "");
+            OwnBoatChannel.QueueDeclare("OwnBoat");
+            OwnBoatChannel.QueueBind(queue: "OwnBoat",
+                              exchange: "OwnBoatData",
+                              routingKey: "");
 
-            Consumer = new EventingBasicConsumer(Channel);
-            Consumer.Received += (model, ea) =>
+            TMAConsumer = new EventingBasicConsumer(TMAChannel);
+            TMAConsumer.Received += (model, ea) =>
             {
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
+
+                DataHandler.ReceiveTMAData(message);
             };
 
-            Thread receiverTr = new Thread(StartReceiving);
-            receiverTr.Start();
+            OwnBoatConsumer = new EventingBasicConsumer(OwnBoatChannel);
+            OwnBoatConsumer.Received += (model, ea) =>
+            {
+                var body = ea.Body;
+                var message = Encoding.UTF8.GetString(body);
+
+                DataHandler.ReceiveTMAData(message);
+            };
+
+            Thread receiverTrTMA = new Thread(StartReceivingTMA);
+            receiverTrTMA.Start();
+
+            Thread receiverTrOwn = new Thread(StartReceivingOwnBoat);
+            receiverTrOwn.Start();
         }
 
-        public void StartReceiving()
+        public void StartReceivingTMA()
         {
-            Channel.BasicConsume(queue: "TMA",
+            TMAChannel.BasicConsume(queue: "TMA",
                                 autoAck: true,
-                                consumer: Consumer);
+                                consumer: TMAConsumer);
         }
 
-
-
+        public void StartReceivingOwnBoat()
+        {
+            OwnBoatChannel.BasicConsume(queue: "OwnBoat",
+                                autoAck: true,
+                                consumer: OwnBoatConsumer);
+        }
     }
 }

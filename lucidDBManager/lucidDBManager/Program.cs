@@ -8,12 +8,12 @@ namespace lucidDBManager
     {
         static void Main(string[] args)
         {
-           // var receiver = new RabbitMQReciever();
+            var receiver = new RabbitMQReciever();
             var sender = new RabbitMQSender();
 
-            TrackData data = new TrackData() { trackID = 1, relativeBearing = (float)0.05 };
+            //TrackData data = new TrackData() { trackID = 1, relativeBearing = (float)0.05 };
 
-            sender.sendTrackData(data);
+            //sender.sendTrackData(data);
         }
     }
 }
