@@ -13,7 +13,7 @@ namespace TrackBeamParser
 
         public static void StartListening(Action<TrackData> funcThatWantTheData)
         {
-            IConnection connection = RabbitMQ.getConnection();
+            IConnection connection = RabbitMQConnection.getConnection();
             trackDataChannel = connection.CreateModel();
 
             trackDataChannel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
