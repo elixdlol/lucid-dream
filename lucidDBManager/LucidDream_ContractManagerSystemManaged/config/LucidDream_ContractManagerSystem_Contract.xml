@@ -1,0 +1,200 @@
+
+<SystemContract name="LucidDream" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="%GridFramework%/xmls/SystemContract.xsd">
+
+  <!--xsi:noNamespaceSchemaLocation should be the path of the XSD (without environment variables, so repalce %GridFramework% with the actual path of GridFramework on your system)-->
+
+  <DomainParticipant domainId="1" name="LucidDreamParticipant">
+    <DomainParticipantQos profile="DEFAULT">
+      <EventQosPolicy>
+        <ThreadSettings/>
+      </EventQosPolicy>
+      <DatabaseQosPolicy>
+        <ThreadSettings/>
+      </DatabaseQosPolicy>
+      <ReceiverPoolQosPolicy>
+        <ThreadSettings/>
+      </ReceiverPoolQosPolicy>
+    </DomainParticipantQos>
+    <Topics>
+      <Partition name="GlobalTopics">
+        <Topic DataTypeName="idl_idde_itfmod_to_3pa_own_boat_data.idde_itfmod_to_3pa_own_boat_data_type" DataTypeVersion="1.0" name="OwnBoat">
+          <TopicQos profile="DEFAULT"/>
+        </Topic>
+        <Topic DataTypeName="idl_idde_itfmod_to_3pa_nav_data.idde_itfmod_to_3pa_nav_data_type" DataTypeVersion="1.0" name="Nav">
+          <TopicQos profile="DEFAULT"/>
+        </Topic>
+        <Topic DataTypeName="idl_idde_itfmod_to_3pa_system_target_data.idde_itfmod_to_3pa_system_target_data_type" DataTypeVersion="1.0" name="Tma">
+          <TopicQos profile="DEFAULT"/>
+        </Topic>
+        <Topic DataTypeName="idl_idde_itfmod_to_3pa_bdt_track_data.idde_itfmod_to_3pa_bdt_track_data_type" DataTypeVersion="1.0" name="BdtCas">
+          <TopicQos profile="DEFAULT"/>
+        </Topic>
+      </Partition>
+    </Topics>
+    <DataWriters>
+      <DataWriter name="TmaDataWriter" topicName="Tma">
+        <DataWriterQos profile="DEFAULT">
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+            <period>
+              <sec>45</sec>
+              <nanosec>0</nanosec>
+            </period>
+          </deadline>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </DataWriterQos>
+      </DataWriter>
+      <DataWriter name="OwnBoatWriter" topicName="OwnBoat">
+        <DataWriterQos profile="DEFAULT">
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+            <period>
+              <sec>3</sec>
+              <nanosec>0</nanosec>
+            </period>
+          </deadline>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </DataWriterQos>
+      </DataWriter>
+      <DataWriter name="NavDataWriter" topicName="Nav">
+        <DataWriterQos profile="DEFAULT">
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+            <period>
+              <sec>3</sec>
+              <nanosec>0</nanosec>
+            </period>
+          </deadline>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </DataWriterQos>
+      </DataWriter>
+      <DataWriter name="BdtCasDataWriter" topicName="BdtCas">
+        <DataWriterQos profile="DEFAULT">
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+            <period>
+              <sec>3</sec>
+              <nanosec>0</nanosec>
+            </period>
+          </deadline>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </DataWriterQos>
+      </DataWriter>
+    </DataWriters>
+    <DataReaders>
+      <DataReader name="OwnBoatReader" topicName="OwnBoat">
+        <DataReaderQos profile="DEFAULT">
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+            <period>
+              <sec>3</sec>
+              <nanosec>0</nanosec>
+            </period>
+          </deadline>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </DataReaderQos>
+      </DataReader>
+      <DataReader name="NavDataReader" topicName="Nav">
+        <DataReaderQos profile="DEFAULT">
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+            <period>
+              <sec>3</sec>
+              <nanosec>0</nanosec>
+            </period>
+          </deadline>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </DataReaderQos>
+      </DataReader>
+      <DataReader name="TmaDataReader" topicName="Tma">
+        <DataReaderQos profile="DEFAULT">
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+            <period>
+              <sec>45</sec>
+              <nanosec>0</nanosec>
+            </period>
+          </deadline>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </DataReaderQos>
+      </DataReader>
+      <DataReader name="BdtCasDataReader" topicName="BdtCas">
+        <DataReaderQos profile="DEFAULT">
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+            <period>
+              <sec>3</sec>
+              <nanosec>0</nanosec>
+            </period>
+          </deadline>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </DataReaderQos>
+      </DataReader>
+    </DataReaders>
+  </DomainParticipant>
+
+</SystemContract>
