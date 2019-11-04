@@ -9,10 +9,11 @@ using System.IO;
 using Newtonsoft.Json.Bson;
 using Newtonsoft.Json;
 using System.Net;
+using lucidDBManager.Data;
 
 namespace lucidDBManager.mongoDB
 {
-    class mongoDBServer
+    public class MongoDBServer
     {
         private IMongoDatabase _db;
 
@@ -39,12 +40,11 @@ namespace lucidDBManager.mongoDB
             }
         }
 
-        public void createMessage(string collectionName, string jsonFile) 
+        public void saveRecord(object message, string collectionName)
         {
             IMongoCollection<BsonDocument> collection = _db.GetCollection<BsonDocument>(collectionName);
-
-            var document = BsonDocument.Parse(jsonFile);
-            collection.InsertOne(document);
+            string jsonFile = JsonConvert.SerializeObject(message);
+            collection.InsertOne(BsonDocument.Parse(jsonFile));
         }
 
         public void deleteMessage(string collectionName, BsonDocument element)

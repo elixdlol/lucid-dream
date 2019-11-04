@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using lucidDBManager.Data;
+using lucidDBManager.mongoDB;
 using lucidDBManager.RabbitMQ;
 using Newtonsoft.Json;
 
@@ -11,12 +12,15 @@ namespace lucidDBManager
     {
         RabbitMQSender sender;
 
+        MongoDBServer db;
+
         bool[] isKnownTarget;
         TimeStampType[] creationTime;
 
-        public DataHandler(RabbitMQSender sender)
+        public DataHandler(RabbitMQSender sender, MongoDBServer db)
         {
             this.sender = sender;
+            this.db = db;
             isKnownTarget = new bool[26];
             creationTime = new TimeStampType[26];
 
@@ -28,11 +32,9 @@ namespace lucidDBManager
 
         // Recieves a string in a Json format.
         // Handle the Received TMA message
-        public void ReceiveTMAData(string receivedMessage)
+        public void ReceiveTMAData(TMAOriginalMessage receivedMessage)
         {
-            TMAOriginalMessage message = (JsonConvert.DeserializeObject(receivedMessage)) as TMAOriginalMessage;
-
-            HandleTMAMessage(message);
+            HandleTMAMessage(receivedMessage);
         }
 
         // Handle a TMA message
@@ -76,22 +78,14 @@ namespace lucidDBManager
                 }
 
                 // send to stiching
+                sender.sendTrackData(sysTracks);
 
                 // save to db
+                db.saveRecord(sysTracks, "SystemTrack");
             }
         }
 
         public void ReceiveOwnBoatData()
-        {
-
-        }
-
-        public void SendTrackData()
-        {
-
-        }
-
-        public void SaveTrackData()
         {
 
         }

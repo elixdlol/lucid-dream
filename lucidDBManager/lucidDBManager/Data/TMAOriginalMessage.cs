@@ -26,7 +26,7 @@ namespace lucidDBManager.Data
         public long integration_time_nominal;
         public long integrat_time_selection_mode;
         public TimeStampType timeStamp;
-        public AngleValidType rawBearingCndidates;
+        public List<AngleValidType> rawBearingCndidates;
     }
 
     public class IsBearingRateValidType
