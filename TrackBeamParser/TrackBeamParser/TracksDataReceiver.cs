@@ -9,36 +9,24 @@ namespace TrackBeamParser
 {
     public class TracksDataReceiver
     {
-        static IConnection connection;
-        static IModel channel;
-
-        private TracksDataReceiver()
-        {
-        }
+        static IModel trackDataChannel;
 
         public static void StartListening(Action<TrackData> funcThatWantTheData)
         {
-            var factory = new ConnectionFactory()
-            {
-                HostName = "172.16.20.161",
-                UserName = "rutush",
-                Password = "123456",
-            };
+            IConnection connection = RabbitMQ.getConnection();
+            trackDataChannel = connection.CreateModel();
 
-            IConnection connection = factory.CreateConnection();
-            IModel channel = connection.CreateModel();
+            trackDataChannel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
 
-            channel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
-
-            channel.QueueDeclare(queue: "track",
+            trackDataChannel.QueueDeclare(queue: "track",
                                  durable: false,
                                  exclusive: false,
                                  autoDelete: false,
                                  arguments: null);
 
-            channel.QueueBind(queue: "track", exchange: "TrackData", routingKey: "");
+            trackDataChannel.QueueBind(queue: "track", exchange: "TrackData", routingKey: "");
 
-            var consumer = new EventingBasicConsumer(channel);
+            var consumer = new EventingBasicConsumer(trackDataChannel);
             consumer.Received += (model, ea) =>
             {
                 byte[] body = ea.Body;
@@ -46,15 +34,14 @@ namespace TrackBeamParser
                 funcThatWantTheData(trackData);
             };
 
-            channel.BasicConsume(queue: "track",
+            trackDataChannel.BasicConsume(queue: "track",
                                  autoAck: true,
                                  consumer: consumer);
         }
 
-        public static void StopLintening()
+        public static void stopListening()
         {
-            channel.Dispose();
-            connection.Dispose();
+            trackDataChannel.Dispose();
         }
     }
 }
