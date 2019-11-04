@@ -23,7 +23,7 @@ namespace lucidDBManager.RabbitMQ
             Channel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
         }
 
-        public void sendTrackData(TrackData message)
+        public void sendTrackData(SystemTracks message)
         {
             string json = JsonConvert.SerializeObject(message);
 

@@ -4,9 +4,14 @@ using System.Text;
 
 namespace lucidDBManager.Data
 {
-    public class TrackData
+    public struct TrackData
     {
-        public int trackID;
+        public long trackID;
         public float relativeBearing;
+    }
+
+    public class SystemTracks
+    {
+        public List<TrackData> systemTracks;
     }
 }
