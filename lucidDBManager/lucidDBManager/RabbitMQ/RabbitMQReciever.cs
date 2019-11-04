@@ -23,9 +23,9 @@ namespace lucidDBManager.RabbitMQ
 
         DataHandler DataHandler { get; set; }
 
-        public RabbitMQReciever()
+        public RabbitMQReciever(DataHandler handler)
         {
-            DataHandler = new DataHandler();
+            DataHandler = handler;
             Factory = new ConnectionFactory() { HostName = "localhost" };
             Connection = Factory.CreateConnection();
             TMAChannel = Connection.CreateModel();
