@@ -5,36 +5,36 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TrackBeamParser
+namespace BestTrackBeamSticher
 {
-    public class TracksDataReceiver
+    public static class TrackBeamDataReciever
     {
         static IModel trackDataChannel;
 
-        public static void StartListening(Action<TrackData> funcThatWantTheData)
+        public static void StartListening(Action<TrackBeamData> funcThatWantTheData)
         {
             IConnection connection = RabbitMQ.getConnection();
             trackDataChannel = connection.CreateModel();
 
-            trackDataChannel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
+            trackDataChannel.ExchangeDeclare(exchange: "beamTrackData", type: ExchangeType.Fanout);
 
-            trackDataChannel.QueueDeclare(queue: "track",
+            trackDataChannel.QueueDeclare(queue: "beamTrack",
                                  durable: true,
                                  exclusive: false,
                                  autoDelete: false,
                                  arguments: null);
 
-            trackDataChannel.QueueBind(queue: "track", exchange: "TrackData", routingKey: "");
+            trackDataChannel.QueueBind(queue: "beamTrack", exchange: "beamTrackData", routingKey: "");
 
             var consumer = new EventingBasicConsumer(trackDataChannel);
             consumer.Received += (model, ea) =>
             {
                 byte[] body = ea.Body;
-                TrackData trackData = JsonConvert.DeserializeObject<TrackData>(Encoding.UTF8.GetString(body));
+                TrackBeamData trackData = JsonConvert.DeserializeObject<TrackBeamData>(Encoding.UTF8.GetString(body));
                 funcThatWantTheData(trackData);
             };
 
-            trackDataChannel.BasicConsume(queue: "track",
+            trackDataChannel.BasicConsume(queue: "beamTrack",
                                           autoAck: true,
                                           consumer: consumer);
         }
