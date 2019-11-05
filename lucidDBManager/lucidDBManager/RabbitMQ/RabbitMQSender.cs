@@ -20,16 +20,29 @@ namespace lucidDBManager.RabbitMQ
             Factory = new ConnectionFactory() { HostName = "localhost" };
             Connection = Factory.CreateConnection();
             Channel = Connection.CreateModel();
-            Channel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
+            Channel.ExchangeDeclare(exchange: "LucidTrackData", type: ExchangeType.Fanout);
+            Channel.ExchangeDeclare(exchange: "LucidOwnBoatData", type: ExchangeType.Fanout);
         }
 
-        public void sendTrackData(SystemTracks message)
+        public void SendTrackData(SystemTracks message)
         {
             string json = JsonConvert.SerializeObject(message);
 
             var body = Encoding.UTF8.GetBytes(json);
 
-            Channel.BasicPublish(exchange: "TrackData",
+            Channel.BasicPublish(exchange: "LucidTrackData",
+                                 routingKey: "",
+                                 basicProperties: null,
+                                 body: body);
+        }
+
+        public void SendOwnBoatData(OwnBoatData message)
+        {
+            string json = JsonConvert.SerializeObject(message);
+
+            var body = Encoding.UTF8.GetBytes(json);
+
+            Channel.BasicPublish(exchange: "LucidOwnBoatData",
                                  routingKey: "",
                                  basicProperties: null,
                                  body: body);
