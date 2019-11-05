@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static lucidDBManager.Data.BasicData;
 
 namespace lucidDBManager.Data
 {
@@ -19,16 +20,7 @@ namespace lucidDBManager.Data
         public List<TrackData> systemTracks;
     }
 
-    public struct TimeType
-    {
-        public long hours;
-        public long minutes;
-        public long seconds;
-        public long c_seconds;
-        public long year;
-        public long month;
-        public long day;
-    }
+    
 
     public enum State
     {
