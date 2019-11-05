@@ -16,12 +16,13 @@ namespace BestTrackBeamSticher
             IConnection connection = RabbitMQConnection.getConnection();
             trackDataChannel = connection.CreateModel();
 
-            trackDataChannel.ExchangeDeclare(exchange: "beamTrackData", type: ExchangeType.Fanout);
+            trackDataChannel.ExchangeDeclare(exchange: "beamTrackData",
+                                        type: ExchangeType.Fanout);
 
             trackDataChannel.QueueDeclare(queue: "beamTrack",
-                                 durable: true,
+                                 durable: false,
                                  exclusive: false,
-                                 autoDelete: false,
+                                 autoDelete: true,
                                  arguments: null);
 
             trackDataChannel.QueueBind(queue: "beamTrack", exchange: "beamTrackData", routingKey: "");
