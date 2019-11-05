@@ -4,7 +4,7 @@
     <ProjectType>Local</ProjectType>
     <ProductVersion>10.0.30319.1</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EE62E651-55EB-4E74-941F-54469473C93E}</ProjectGuid>
+    <ProjectGuid>{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <AssemblyKeyContainerName>
