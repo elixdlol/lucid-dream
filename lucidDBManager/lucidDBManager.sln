@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lucidDBManager", "lucidDBManager\lucidDBManager.csproj", "{1EB3DC8D-40E4-450B-9611-D64C0733AF61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucidDream_TMA_Microservice", "LucidDream_TMA_Microservice\LucidDream_TMA_Microservice.csproj", "{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucidDream_BTD_Microservice", "LucidDream_BDT_Microservice\LucidDream_BTD_Microservice.csproj", "{EE62E651-55EB-4E74-941F-54469473C93E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucidDream_TMA_Microservice", "LucidDream_TMA_Microservice\LucidDream_TMA_Microservice.csproj", "{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,16 +31,6 @@ Global
 		{1EB3DC8D-40E4-450B-9611-D64C0733AF61}.Release|x64.Build.0 = Release|Any CPU
 		{1EB3DC8D-40E4-450B-9611-D64C0733AF61}.Release|x86.ActiveCfg = Release|Any CPU
 		{1EB3DC8D-40E4-450B-9611-D64C0733AF61}.Release|x86.Build.0 = Release|Any CPU
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|x64.ActiveCfg = Debug|x64
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|x64.Build.0 = Debug|x64
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|x86.ActiveCfg = Debug|x86
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|x86.Build.0 = Debug|x86
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|Any CPU.ActiveCfg = Release|x86
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x64.ActiveCfg = Release|x64
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x64.Build.0 = Release|x64
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x86.ActiveCfg = Release|x86
-		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x86.Build.0 = Release|x86
 		{EE62E651-55EB-4E74-941F-54469473C93E}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{EE62E651-55EB-4E74-941F-54469473C93E}.Debug|x64.ActiveCfg = Debug|x64
 		{EE62E651-55EB-4E74-941F-54469473C93E}.Debug|x64.Build.0 = Debug|x64
@@ -51,6 +41,16 @@ Global
 		{EE62E651-55EB-4E74-941F-54469473C93E}.Release|x64.Build.0 = Release|x64
 		{EE62E651-55EB-4E74-941F-54469473C93E}.Release|x86.ActiveCfg = Release|x86
 		{EE62E651-55EB-4E74-941F-54469473C93E}.Release|x86.Build.0 = Release|x86
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|x64.ActiveCfg = Debug|x64
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|x64.Build.0 = Debug|x64
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|x86.ActiveCfg = Debug|x86
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Debug|x86.Build.0 = Debug|x86
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|Any CPU.ActiveCfg = Release|x86
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x64.ActiveCfg = Release|x64
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x64.Build.0 = Release|x64
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x86.ActiveCfg = Release|x86
+		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

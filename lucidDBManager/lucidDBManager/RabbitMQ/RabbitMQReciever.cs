@@ -1,4 +1,6 @@
-﻿using RabbitMQ.Client;
+﻿using lucidDBManager.Data;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
@@ -23,9 +25,9 @@ namespace lucidDBManager.RabbitMQ
 
         DataHandler DataHandler { get; set; }
 
-        public RabbitMQReciever()
+        public RabbitMQReciever(DataHandler handler)
         {
-            DataHandler = new DataHandler();
+            DataHandler = handler;
             Factory = new ConnectionFactory() { HostName = "localhost" };
             Connection = Factory.CreateConnection();
             TMAChannel = Connection.CreateModel();
@@ -48,7 +50,10 @@ namespace lucidDBManager.RabbitMQ
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
 
-                DataHandler.ReceiveTMAData(message);
+                TMAOriginalMessage tmaMessage = JsonConvert.DeserializeObject< TMAOriginalMessage>(message);
+
+
+                DataHandler.ReceiveTMAData(tmaMessage);
             };
 
             OwnBoatConsumer = new EventingBasicConsumer(OwnBoatChannel);
@@ -57,7 +62,7 @@ namespace lucidDBManager.RabbitMQ
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
 
-                DataHandler.ReceiveTMAData(message);
+                //DataHandler.ReceiveTMAData(message);
             };
 
             Thread receiverTrTMA = new Thread(StartReceivingTMA);

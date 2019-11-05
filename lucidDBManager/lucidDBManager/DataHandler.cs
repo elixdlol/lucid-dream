@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using lucidDBManager.Data;
+using lucidDBManager.mongoDB;
 using lucidDBManager.RabbitMQ;
 using Newtonsoft.Json;
 
@@ -11,40 +12,82 @@ namespace lucidDBManager
     {
         RabbitMQSender sender;
 
-        DataHandler(RabbitMQSender sender)
+        MongoDBServer db;
+
+        bool[] isKnownTarget;
+        TimeStampType[] creationTime;
+
+        public DataHandler(RabbitMQSender sender, MongoDBServer db)
         {
             this.sender = sender;
+            this.db = db;
+            isKnownTarget = new bool[26];
+            creationTime = new TimeStampType[26];
+
+            for (int i = 0; i < isKnownTarget.Length; i++)
+            {
+                isKnownTarget[i] = false;
+            }
         }
 
         // Recieves a string in a Json format.
-        // Handle the Received TMA message, then send it to the sticher
-        // and save it to the DB.
-        public void ReceiveTMAData(string receivedMessage)
+        // Handle the Received TMA message
+        public void ReceiveTMAData(TMAOriginalMessage receivedMessage)
         {
-            TMAOriginalMessage message = (JsonConvert.DeserializeObject(receivedMessage)) as TMAOriginalMessage;
+            HandleTMAMessage(receivedMessage);
+        }
 
-            SystemTracks systemTracks = new SystemTracks();
+        // Handle a TMA message
+        public void HandleTMAMessage(TMAOriginalMessage message)
+        {
+            SystemTracks sysTracks = new SystemTracks();
+            sysTracks.timeStamp = message.timeStamp;
+            sysTracks.systemTracks = new List<TrackData>();
 
             foreach (OriginalSystemTrack OrigTrack in message.systemTracks)
             {
-                TrackData track = new TrackData()
-                {
-                    trackID = OrigTrack.trackId,
-                    relativeBearing = OrigTrack.bearing
-                };
-            }
+                // if track exists
+                if (OrigTrack.trackId != 0)
+                {                 
+                    TrackData newTrackData = new TrackData();
+ 
+                    newTrackData.trackID = OrigTrack.trackId;
 
-            sender.sendTrackData(systemTracks);
+                    newTrackData.relativeBearing = OrigTrack.bearing;
+
+                    if (OrigTrack.bearingRate.valid)
+                    {
+                        newTrackData.relativeBearingRate = OrigTrack.bearingRate.value;
+                    }
+
+                    // if new track
+                    if (!isKnownTarget[OrigTrack.trackId - 1])
+                    {
+                        isKnownTarget[OrigTrack.trackId - 1] = true;
+                        creationTime[OrigTrack.trackId - 1] = OrigTrack.timeStamp;
+                        
+                        newTrackData.creationTime = OrigTrack.timeStamp;
+                    }
+                    // if old track
+                    else
+                    {
+                        newTrackData.creationTime = creationTime[OrigTrack.trackId - 1];
+                    }
+
+                    sysTracks.systemTracks.Add(newTrackData);
+                }
+
+                // send to stiching
+                sender.sendTrackData(sysTracks);
+
+                // save to db
+                db.saveRecord(sysTracks, "SystemTrack");
+            }
         }
 
         public void ReceiveOwnBoatData()
         {
 
         }
-
-        //public void SendDataToStiching(TrackData trackdata)
-        //{
-        //    // Send Data
-        //}
     }
 }
