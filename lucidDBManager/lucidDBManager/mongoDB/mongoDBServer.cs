@@ -68,6 +68,13 @@ namespace lucidDBManager.mongoDB
             return documentsList;
         }
 
+        public void  getTrackByID(long trackID) 
+        {
+            IMongoCollection<BsonDocument> collection = _db.GetCollection<BsonDocument>("SystemTrack");
+            var filter = Builders<BsonDocument>.Filter.Eq("systemTracks.trackID", trackID);
+            var result = collection.Find(filter).ToList();
+        }
+
         #endregion
         #region Private Functions
 
