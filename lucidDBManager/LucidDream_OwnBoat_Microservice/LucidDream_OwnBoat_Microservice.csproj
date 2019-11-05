@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>10.0.30319.1</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>LucidDream_SystemManaged</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>LucidDream_ManagedContractManagerSystem_VS2010x64</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <ReferencePath>C:\Grid-Liran\Grid\release\v4.4.10\GridFramework\lib\x64Win64VS2010;C:\Grid-Liran\Grid\release\v4.4.10\GridFramework\DataTypesLibrary\lib\x64Win64VS2010;C:\Grid-Liran\Grid\release\v4.4.10\GridFramework\ThirdPartyUtils\lib\x64Win64VS2010</ReferencePath>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <OutputPath>x64Win64VS2010\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DESIGN;DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>x64Win64VS2010\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>x64Win64VS2010\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DESIGN;DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>x64Win64VS2010\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- MPC ADD DEPENDENCIES -->
+    <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WorkSpaces\lucid-dream\lucidDBManager\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net40\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WorkSpaces\lucid-dream\lucidDBManager\packages\RabbitMQ.Client.5.1.2\lib\net451\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.XML">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="GridTypes_Managedd" Condition="'$(Configuration)'=='Debug'">
+      <HintPath>$(GridFramework)\lib\$(GridPlatform)\GridTypes_Managedd.dll</HintPath>
+    </Reference>
+    <Reference Include="GridTypes_Managed" Condition="'$(Configuration)'=='Release'">
+      <HintPath>$(GridFramework)\lib\$(GridPlatform)\GridTypes_Managed.dll</HintPath>
+    </Reference>
+    <Reference Include="DDS_ManagedShelld" Condition="'$(Configuration)'=='Debug'">
+      <HintPath>$(GridFramework)\lib\$(GridPlatform)\DDS_ManagedShelld.dll</HintPath>
+    </Reference>
+    <Reference Include="DDS_ManagedShell" Condition="'$(Configuration)'=='Release'">
+      <HintPath>$(GridFramework)\lib\$(GridPlatform)\DDS_ManagedShell.dll</HintPath>
+    </Reference>
+    <Reference Include="ContractManager_Managedd" Condition="'$(Configuration)'=='Debug'">
+      <HintPath>$(GridFramework)\lib\$(GridPlatform)\ContractManager_Managedd.dll</HintPath>
+    </Reference>
+    <Reference Include="ContractManager_Managed" Condition="'$(Configuration)'=='Release'">
+      <HintPath>$(GridFramework)\lib\$(GridPlatform)\ContractManager_Managed.dll</HintPath>
+    </Reference>
+    <Reference Include="GridSetter_Managedd" Condition="'$(Configuration)'=='Debug'">
+      <HintPath>$(GridFramework)\lib\$(GridPlatform)\GridSetter_Managedd.dll</HintPath>
+    </Reference>
+    <Reference Include="GridSetter_Managed" Condition="'$(Configuration)'=='Release'">
+      <HintPath>$(GridFramework)\lib\$(GridPlatform)\GridSetter_Managed.dll</HintPath>
+    </Reference>
+    <Reference Include="LucidDream_DataTypes_Managedd" Condition="'$(Configuration)'=='Debug'">
+      <HintPath>$(GridFramework)\DataTypesLibrary\lib\$(GridPlatform)\LucidDream_DataTypes_Managedd.dll</HintPath>
+    </Reference>
+    <Reference Include="LucidDream_DataTypes_Managed" Condition="'$(Configuration)'=='Release'">
+      <HintPath>$(GridFramework)\DataTypesLibrary\lib\$(GridPlatform)\LucidDream_DataTypes_Managed.dll</HintPath>
+    </Reference>
+    <Reference Include="LucidDream_ContractManager_Managedd" Condition="'$(Configuration)'=='Debug'">
+      <HintPath>$(GridFramework)\DataTypesLibrary\lib\$(GridPlatform)\LucidDream_ContractManager_Managedd.dll</HintPath>
+    </Reference>
+    <Reference Include="LucidDream_ContractManager_Managed" Condition="'$(Configuration)'=='Release'">
+      <HintPath>$(GridFramework)\DataTypesLibrary\lib\$(GridPlatform)\LucidDream_ContractManager_Managed.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>$(GridFramework)\ThirdPartyUtils\lib\$(GridPlatform)\log4net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\OwnBoat_OriginalMessage.cs" />
+    <Compile Include="src\RabbitMQSender.cs" />
+    <Compile Include="src\LucidDream_OwnBoat_Managed.cs">
+    </Compile>
+    <None Include="app.config" />
+    <None Include="config\LucidDream_ContractManagerSystem_Contract.xml" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
