@@ -5,6 +5,8 @@ using lucidDBManager.Data;
 using lucidDBManager.mongoDB;
 using lucidDBManager.RabbitMQ;
 using Newtonsoft.Json;
+using static lucidDBManager.Data.BasicData;
+using static lucidDBManager.Data.BasicOriginalData;
 
 namespace lucidDBManager
 {
@@ -37,7 +39,7 @@ namespace lucidDBManager
         // Handle the Received TMA message
         public void ReceiveTMAData(TMAOriginalMessage receivedMessage)
         {
-           HandleTMAMessage(receivedMessage);
+            HandleTMAMessage(receivedMessage);
         }
 
         // Handle a TMA message
@@ -50,12 +52,12 @@ namespace lucidDBManager
             sysTracks.systemTracks = new List<TrackData>();
 
             foreach (OriginalSystemTrack OrigTrack in message.systemTracks)
-            { 
+            {
                 // if track exists
                 if (OrigTrack.trackId != 0)
-                {                 
+                {
                     TrackData newTrackData = new TrackData();
- 
+
                     newTrackData.trackID = OrigTrack.trackId;
 
                     newTrackData.relativeBearing = OrigTrack.bearing;
@@ -88,7 +90,7 @@ namespace lucidDBManager
             foreach (var currTrack in lastTracksMessage.systemTracks)
             {
                 // check if track was deleted
-                if(!sysTracks.systemTracks.Exists(x=>x.trackID == currTrack.trackId))
+                if (!sysTracks.systemTracks.Exists(x => x.trackID == currTrack.trackId))
                 {
                     isKnownTarget[currTrack.trackId - 1] = false;
                     TrackData newTrack = new TrackData()
@@ -123,8 +125,12 @@ namespace lucidDBManager
             OwnBoatData ownBoat = new OwnBoatData();
 
             // convert
-            //
-            //
+            ownBoat.timeZone = message.timeZone;
+            ownBoat.heading = message.heading;
+            ownBoat.pitch = message.pitch;
+            ownBoat.roll = message.roll;
+            ownBoat.heave = message.heave;
+
 
             sender.SendOwnBoatData(ownBoat);
 
@@ -144,6 +150,21 @@ namespace lucidDBManager
             newType.year = origType.date.year;
 
             return newType;
+        }
+
+        public void GetOfflineTrackData()
+        {
+            // get track data by id from db
+        }
+
+        public void GetOfflineAudioFile()
+        {
+            // get wav file by id
+        }
+
+        public void GetOfflineOwnBoatData()
+        {
+            // get own boat data by id from db
         }
     }
 }
