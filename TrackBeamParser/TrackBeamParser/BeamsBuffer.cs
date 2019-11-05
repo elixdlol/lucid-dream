@@ -6,20 +6,37 @@ namespace TrackBeamParser
 {
     public static class BeamsBuffer
     {
-        static byte[][] Beams = new byte[beamsNumber][];
-        const int beamsNumber= 192;
+        const int beamsNumber = 192;
+        const int maxBufferSize = 1400 * 10 * 1000 * 10;
+        static int indexOfEndInBuffers;
+        static byte[][] Beams;
         public static Object Locker = new Object();
 
-        public static void writeBeams(byte[][] beams)
+        static BeamsBuffer()
         {
-            // append to end of every beam array
+            cleanBeams();
+        }
+
+        public static void WriteBeamsFromDictionary(byte[][] beamsValues)
+        {
+            lock (Locker)
+            {
+                int j = 0;
+
+                foreach (var beam in beamsValues)
+                {
+                    Buffer.BlockCopy(beam, 0, Beams[j], indexOfEndInBuffers, beam.Length);
+                    indexOfEndInBuffers += beam.Length;
+                    j++;
+                }
+            }
         }
 
         public static byte[][] getBeamsAndFlush()
         {
             lock (Locker)
             {
-                byte[][] beamArray = new byte[][] { };
+                byte[][] beamArray = Beams;
                 cleanBeams();
                 return beamArray;
             }
@@ -27,7 +44,13 @@ namespace TrackBeamParser
 
         private static void cleanBeams()
         {
+            indexOfEndInBuffers = 0;
             Beams = new byte[beamsNumber][];
+
+            for (int i = 0; i < Beams.Length; i++)
+            {
+                Beams[i] = new byte[maxBufferSize];
+            }
         }
     }
 }

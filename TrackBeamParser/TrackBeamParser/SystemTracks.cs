@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace lucidDBManager.Data
+namespace TrackBeamParser
 {
     public struct TrackData
     {
@@ -36,5 +36,4 @@ namespace lucidDBManager.Data
         UpdateTrack,
         DeleteTrack
     }
-
 }

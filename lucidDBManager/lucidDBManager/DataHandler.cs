@@ -14,8 +14,11 @@ namespace lucidDBManager
 
         MongoDBServer db;
 
+        // system track helper types
         bool[] isKnownTarget;
         TimeStampType[] creationTime;
+        TMAOriginalMessage lastTracksMessage;
+
 
         public DataHandler(RabbitMQSender sender, MongoDBServer db)
         {
@@ -34,18 +37,20 @@ namespace lucidDBManager
         // Handle the Received TMA message
         public void ReceiveTMAData(TMAOriginalMessage receivedMessage)
         {
-            HandleTMAMessage(receivedMessage);
+           HandleTMAMessage(receivedMessage);
         }
 
         // Handle a TMA message
         public void HandleTMAMessage(TMAOriginalMessage message)
         {
             SystemTracks sysTracks = new SystemTracks();
-            sysTracks.timeStamp = message.timeStamp;
+
+            sysTracks.timeStamp = convertTime(message.timeStamp);
+
             sysTracks.systemTracks = new List<TrackData>();
 
             foreach (OriginalSystemTrack OrigTrack in message.systemTracks)
-            {
+            { 
                 // if track exists
                 if (OrigTrack.trackId != 0)
                 {                 
@@ -65,29 +70,80 @@ namespace lucidDBManager
                     {
                         isKnownTarget[OrigTrack.trackId - 1] = true;
                         creationTime[OrigTrack.trackId - 1] = OrigTrack.timeStamp;
-                        
-                        newTrackData.creationTime = OrigTrack.timeStamp;
+
+                        newTrackData.trackState = State.NewTrack;
+                        newTrackData.creationTime = convertTime(OrigTrack.timeStamp);
                     }
                     // if old track
                     else
                     {
-                        newTrackData.creationTime = creationTime[OrigTrack.trackId - 1];
+                        newTrackData.trackState = State.UpdateTrack;
+                        newTrackData.creationTime = convertTime(creationTime[OrigTrack.trackId - 1]);
                     }
 
                     sysTracks.systemTracks.Add(newTrackData);
                 }
-
-                // send to stiching
-                sender.sendTrackData(sysTracks);
-
-                // save to db
-                db.saveRecord(sysTracks, "SystemTrack");
             }
+
+            foreach (var currTrack in lastTracksMessage.systemTracks)
+            {
+                // check if track was deleted
+                if(!sysTracks.systemTracks.Exists(x=>x.trackID == currTrack.trackId))
+                {
+                    isKnownTarget[currTrack.trackId - 1] = false;
+                    TrackData newTrack = new TrackData()
+                    {
+                        trackID = currTrack.trackId,
+                        trackState = State.DeleteTrack
+                    };
+
+                    sysTracks.systemTracks.Add(newTrack);
+                }
+            }
+
+            lastTracksMessage = message;
+
+            // send to stiching
+            sender.SendTrackData(sysTracks);
+
+            // save to db
+            db.saveRecord(sysTracks, "SystemTrack");
         }
 
-        public void ReceiveOwnBoatData()
+        // Recieves a string in a Json format.
+        // Handle the Received OwnBoat message
+        public void ReceiveOwnBoatData(OwnBoatOriginalMessage receivedMessage)
         {
+            HandleOwnBoatMessage(receivedMessage);
+        }
 
+        // Handle the Own Boat message
+        public void HandleOwnBoatMessage(OwnBoatOriginalMessage message)
+        {
+            OwnBoatData ownBoat = new OwnBoatData();
+
+            // convert
+            //
+            //
+
+            sender.SendOwnBoatData(ownBoat);
+
+            //save to db
+            db.saveRecord(ownBoat, "OwnBoat");
+        }
+
+        public TimeType convertTime(TimeStampType origType)
+        {
+            TimeType newType;
+            newType.c_seconds = origType.time.c_seconds;
+            newType.seconds = origType.time.seconds;
+            newType.minutes = origType.time.minutes;
+            newType.hours = origType.time.hours;
+            newType.day = origType.date.day;
+            newType.month = origType.date.month;
+            newType.year = origType.date.year;
+
+            return newType;
         }
     }
 }
