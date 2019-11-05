@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucidDream_BTD_Microservice
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucidDream_TMA_Microservice", "LucidDream_TMA_Microservice\LucidDream_TMA_Microservice.csproj", "{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LucidDream_OwnBoat_Microservice", "LucidDream_OwnBoat_Microservice\LucidDream_OwnBoat_Microservice.csproj", "{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,16 @@ Global
 		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x64.Build.0 = Release|x64
 		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x86.ActiveCfg = Release|x86
 		{97B91FC6-FECA-1BAD-B5C9-75B5B2F28B37}.Release|x86.Build.0 = Release|x86
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Debug|x64.ActiveCfg = Debug|x64
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Debug|x64.Build.0 = Debug|x64
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Debug|x86.ActiveCfg = Debug|x86
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Debug|x86.Build.0 = Debug|x86
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Release|Any CPU.ActiveCfg = Release|x86
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Release|x64.ActiveCfg = Release|x64
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Release|x64.Build.0 = Release|x64
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Release|x86.ActiveCfg = Release|x86
+		{7DFEF7D9-E8FC-4A91-AA18-CC2DEEC9AA85}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
