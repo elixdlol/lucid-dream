@@ -68,7 +68,7 @@ namespace lucidDBManager.RabbitMQ
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
 
-                //DataHandler.ReceiveTMAData(message);
+                DataHandler.ReceiveOwnBoatData(message);
             };
 
 

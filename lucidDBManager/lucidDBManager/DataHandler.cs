@@ -151,5 +151,20 @@ namespace lucidDBManager
 
             return newType;
         }
+
+        public void GetOfflineTrackData()
+        {
+            // get track data by id from db
+        }
+
+        public void GetOfflineAudioFile()
+        {
+            // get wav file by id
+        }
+
+        public void GetOfflineOwnBoatData()
+        {
+            // get own boat data by id from db
+        }
     }
 }
