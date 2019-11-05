@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 
 namespace LucidDreamSystem
 {
-    class OwnBoat_OriginalMessage
+    public class OwnBoat_OriginalMessage
     {
-        IdlHeader idlHeader = new IdlHeader();
-        SystemTime systemTime = new SystemTime();
-        Heading heading = new Heading();
-        HeadingRate heading_rate = new HeadingRate();
-        Roll roll = new Roll();
-        RollRate roll_rate = new RollRate();
-        Pitch pitch = new Pitch();
-        PitchRate pitch_rate = new PitchRate();
-        Heave heave = new Heave();
-        HeaveRate heave_rate = new HeaveRate();
-        CourseOverGround course_overe_ground = new CourseOverGround();
+        public IdlHeader idlHeader = new IdlHeader();
+        public SystemTime systemTime = new SystemTime();
+        public Timezone timezone = new Timezone();
+        public Heading heading = new Heading();
+        public HeadingRate heading_rate = new HeadingRate();
+        public Roll roll = new Roll();
+        public RollRate roll_rate = new RollRate();
+        public Pitch pitch = new Pitch();
+        public PitchRate pitch_rate = new PitchRate();
+        public Heave heave = new Heave();
+        public HeaveRate heave_rate = new HeaveRate();
+        public CourseOverGround course_over_ground = new CourseOverGround();
 
     }
     public class IdlHeader

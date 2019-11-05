@@ -261,9 +261,9 @@ namespace LucidDreamSystem
         #region OwnBoatReader Events
         public void OwnBoatReaderOnSampleArrived(LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_own_boat_data.idde_itfmod_to_3pa_own_boat_data_typeDataReader dr, LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_own_boat_data.idde_itfmod_to_3pa_own_boat_data_type dataType, SampleInfo info, ValidityStatus validity)
         {
-            //BDT_CAS_OriginalMessage converted_data = ConvertData(dataType);
-            //string data = JsonConvert.SerializeObject(converted_data);
-            //rabbit.send_data(data);
+            OwnBoat_OriginalMessage converted_data = ConvertData(dataType);
+            string data = JsonConvert.SerializeObject(converted_data);
+            rabbit.send_data(data);
             Console.WriteLine("a new sample of \"idde_itfmod_to_3pa_own_boat_data_type\" has arrived");
         }
 
@@ -281,55 +281,171 @@ namespace LucidDreamSystem
         {
             OwnBoat_OriginalMessage newDataClass = new OwnBoat_OriginalMessage();
 
+            newDataClass.idlHeader.message_state = message.idl_header.message_state;
+            newDataClass.idlHeader.message_source = message.idl_header.message_source;
+            newDataClass.idlHeader.number_of_bytes = message.idl_header.number_of_bytes;
+            newDataClass.idlHeader.compile_time_of_message.time.hours = message.idl_header.compile_time_of_message.time.hours;
+            newDataClass.idlHeader.compile_time_of_message.time.minutes = message.idl_header.compile_time_of_message.time.minutes;
+            newDataClass.idlHeader.compile_time_of_message.time.seconds = message.idl_header.compile_time_of_message.time.seconds;
+            newDataClass.idlHeader.compile_time_of_message.time.c_seconds = message.idl_header.compile_time_of_message.time.c_seconds;
+            newDataClass.idlHeader.compile_time_of_message.date.year = message.idl_header.compile_time_of_message.date.year;
+            newDataClass.idlHeader.compile_time_of_message.date.month = message.idl_header.compile_time_of_message.date.month;
+            newDataClass.idlHeader.compile_time_of_message.date.day = message.idl_header.compile_time_of_message.date.day;
 
-            //newDataClass.timeStamp.time.hours = message.time_reference.time.hours;
-            //newDataClass.timeStamp.time.minutes = message.time_reference.time.minutes;
-            //newDataClass.timeStamp.time.seconds = message.time_reference.time.seconds;
-            //newDataClass.timeStamp.time.c_seconds = message.time_reference.time.c_seconds;
+            newDataClass.systemTime.is_current = message.system_time.is_current;
+            newDataClass.systemTime.sensor = message.system_time.sensor;
+            newDataClass.systemTime.time.valid = message.system_time.time.valid;
+            newDataClass.systemTime.time.value.time.hours = message.system_time.time.value.time.hours;
+            newDataClass.systemTime.time.value.time.minutes = message.system_time.time.value.time.minutes;
+            newDataClass.systemTime.time.value.time.seconds = message.system_time.time.value.time.seconds;
+            newDataClass.systemTime.time.value.time.c_seconds = message.system_time.time.value.time.c_seconds;
+            newDataClass.systemTime.time.value.date.year = message.system_time.time.value.date.year;
+            newDataClass.systemTime.time.value.date.month = message.system_time.time.value.date.month;
+            newDataClass.systemTime.time.value.date.day = message.system_time.time.value.date.day;
 
-            //newDataClass.timeStamp.date.day = message.time_reference.date.day;
-            //newDataClass.timeStamp.date.month = message.time_reference.date.month;
-            //newDataClass.timeStamp.date.year = message.time_reference.date.year;
+            newDataClass.timezone.data.valid = message.timezone.data.valid;
+            newDataClass.timezone.data.value = message.timezone.data.value;
+            newDataClass.timezone.is_current = message.timezone.is_current;
+            newDataClass.timezone.sensor = message.timezone.sensor;
+            newDataClass.timezone.time.valid = message.timezone.time.valid;
+            newDataClass.timezone.time.value.time.hours = message.timezone.time.value.time.hours;
+            newDataClass.timezone.time.value.time.minutes = message.timezone.time.value.time.minutes;
+            newDataClass.timezone.time.value.time.seconds = message.timezone.time.value.time.seconds;
+            newDataClass.timezone.time.value.time.c_seconds = message.timezone.time.value.time.c_seconds;
+            newDataClass.timezone.time.value.date.year = message.timezone.time.value.date.year;
+            newDataClass.timezone.time.value.date.month = message.timezone.time.value.date.month;
+            newDataClass.timezone.time.value.date.day = message.timezone.time.value.date.day;
 
-            //for (int i = 0; i < message.track_data.Length; i++)
-            //{
-            //    OriginalSystemTrack currTrack = new OriginalSystemTrack();
-            //    currTrack.approach_receed_indicator = message.track_data.get_Item((uint)i).approach_receed_indicator;
-            //    currTrack.bandwidth.valid = message.track_data.get_Item((uint)i).bandwidth.valid;
-            //    currTrack.bandwidth.upper = message.track_data.get_Item((uint)i).bandwidth.upper;
-            //    currTrack.bandwidth.lower = message.track_data.get_Item((uint)i).bandwidth.lower;
-            //    currTrack.bearing = message.track_data.get_Item((uint)i).bearing;
-            //    currTrack.bearingRate.valid = message.track_data.get_Item((uint)i).bearing_rate.valid;
-            //    currTrack.bearingRate.value = message.track_data.get_Item((uint)i).bearing_rate.value;
-            //    currTrack.constant_bearing_warning = message.track_data.get_Item((uint)i).constant_bearing_warning;
-            //    currTrack.integration_time = message.track_data.get_Item((uint)i).integration_time;
-            //    currTrack.integration_time_nominal = message.track_data.get_Item((uint)i).integration_time_nominal;
-            //    currTrack.integrat_time_selection_mode = message.track_data.get_Item((uint)i).integrat_time_selection_mode;
+            newDataClass.heading.data.valid = message.heading.data.valid;
+            newDataClass.heading.data.value = message.heading.data.value;
+            newDataClass.heading.is_current = message.heading.is_current;
+            newDataClass.heading.sensor = message.heading.sensor;
+            newDataClass.heading.time.valid = message.heading.time.valid;
+            newDataClass.heading.time.value.time.hours = message.heading.time.value.time.hours;
+            newDataClass.heading.time.value.time.minutes = message.heading.time.value.time.minutes;
+            newDataClass.heading.time.value.time.seconds = message.heading.time.value.time.seconds;
+            newDataClass.heading.time.value.time.c_seconds = message.heading.time.value.time.c_seconds;
+            newDataClass.heading.time.value.date.year = message.heading.time.value.date.year;
+            newDataClass.heading.time.value.date.month = message.heading.time.value.date.month;
+            newDataClass.heading.time.value.date.day = message.heading.time.value.date.day;
 
-            //    for (int j = 0; j < message.track_data.get_Item((uint)i).raw_bearing_candidates.Length; j++)
-            //    {
-            //        currTrack.rawBearingCndidates.Add(new AngleValidType());
-            //        currTrack.rawBearingCndidates[j].valid = message.track_data.get_Item((uint)i).raw_bearing_candidates.get_Item((uint)j).valid;
-            //        currTrack.rawBearingCndidates[j].value = message.track_data.get_Item((uint)i).raw_bearing_candidates.get_Item((uint)j).value;
-            //    }
+            newDataClass.heading_rate.data.valid = message.heading_rate.data.valid;
+            newDataClass.heading_rate.data.value = message.heading_rate.data.value;
+            newDataClass.heading_rate.is_current = message.heading_rate.is_current;
+            newDataClass.heading_rate.sensor = message.heading_rate.sensor;
+            newDataClass.heading_rate.time.valid = message.heading_rate.time.valid;
+            newDataClass.heading_rate.time.value.time.hours = message.heading_rate.time.value.time.hours;
+            newDataClass.heading_rate.time.value.time.minutes = message.heading_rate.time.value.time.minutes;
+            newDataClass.heading_rate.time.value.time.seconds = message.heading_rate.time.value.time.seconds;
+            newDataClass.heading_rate.time.value.time.c_seconds = message.heading_rate.time.value.time.c_seconds;
+            newDataClass.heading_rate.time.value.date.year = message.heading_rate.time.value.date.year;
+            newDataClass.heading_rate.time.value.date.month = message.heading_rate.time.value.date.month;
+            newDataClass.heading_rate.time.value.date.day = message.heading_rate.time.value.date.day;
 
-            //    currTrack.state = message.track_data.get_Item((uint)i).state;
-            //    currTrack.s_n_ratio = message.track_data.get_Item((uint)i).s_n_ratio;
-            //    currTrack.target_level = message.track_data.get_Item((uint)i).target_level;
+            newDataClass.roll.data.valid = message.roll.data.valid;
+            newDataClass.roll.data.value = message.roll.data.value;
+            newDataClass.roll.is_current = message.roll.is_current;
+            newDataClass.roll.sensor = message.roll.sensor;
+            newDataClass.roll.time.valid = message.roll.time.valid;
+            newDataClass.roll.time.value.time.hours = message.roll.time.value.time.hours;
+            newDataClass.roll.time.value.time.minutes = message.roll.time.value.time.minutes;
+            newDataClass.roll.time.value.time.seconds = message.roll.time.value.time.seconds;
+            newDataClass.roll.time.value.time.c_seconds = message.roll.time.value.time.c_seconds;
+            newDataClass.roll.time.value.date.year = message.roll.time.value.date.year;
+            newDataClass.roll.time.value.date.month = message.roll.time.value.date.month;
+            newDataClass.roll.time.value.date.day = message.roll.time.value.date.day;
 
-            //    currTrack.timeStamp.time.hours = message.track_data.get_Item((uint)i).time_reference.time.hours;
-            //    currTrack.timeStamp.time.minutes = message.track_data.get_Item((uint)i).time_reference.time.minutes;
-            //    currTrack.timeStamp.time.seconds = message.track_data.get_Item((uint)i).time_reference.time.seconds;
-            //    currTrack.timeStamp.time.c_seconds = message.track_data.get_Item((uint)i).time_reference.time.c_seconds;
+            newDataClass.roll_rate.data.valid = message.roll_rate.data.valid;
+            newDataClass.roll_rate.data.value = message.roll_rate.data.value;
+            newDataClass.roll_rate.is_current = message.roll_rate.is_current;
+            newDataClass.roll_rate.sensor = message.roll_rate.sensor;
+            newDataClass.roll_rate.time.valid = message.roll_rate.time.valid;
+            newDataClass.roll_rate.time.value.time.hours = message.roll_rate.time.value.time.hours;
+            newDataClass.roll_rate.time.value.time.minutes = message.roll_rate.time.value.time.minutes;
+            newDataClass.roll_rate.time.value.time.seconds = message.roll_rate.time.value.time.seconds;
+            newDataClass.roll_rate.time.value.time.c_seconds = message.roll_rate.time.value.time.c_seconds;
+            newDataClass.roll_rate.time.value.date.year = message.roll_rate.time.value.date.year;
+            newDataClass.roll_rate.time.value.date.month = message.roll_rate.time.value.date.month;
+            newDataClass.roll_rate.time.value.date.day = message.roll_rate.time.value.date.day;
 
-            //    currTrack.timeStamp.date.day = message.track_data.get_Item((uint)i).time_reference.date.day;
-            //    currTrack.timeStamp.date.month = message.track_data.get_Item((uint)i).time_reference.date.month;
-            //    currTrack.timeStamp.date.year = message.track_data.get_Item((uint)i).time_reference.date.year;
+            newDataClass.pitch.data.valid = message.pitch.data.valid;
+            newDataClass.pitch.data.value = message.pitch.data.value;
+            newDataClass.pitch.is_current = message.pitch.is_current;
+            newDataClass.pitch.sensor = message.pitch.sensor;
+            newDataClass.pitch.time.valid = message.pitch.time.valid;
+            newDataClass.pitch.time.value.time.hours = message.pitch.time.value.time.hours;
+            newDataClass.pitch.time.value.time.minutes = message.pitch.time.value.time.minutes;
+            newDataClass.pitch.time.value.time.seconds = message.pitch.time.value.time.seconds;
+            newDataClass.pitch.time.value.time.c_seconds = message.pitch.time.value.time.c_seconds;
+            newDataClass.pitch.time.value.date.year = message.pitch.time.value.date.year;
+            newDataClass.pitch.time.value.date.month = message.pitch.time.value.date.month;
+            newDataClass.pitch.time.value.date.day = message.pitch.time.value.date.day;
 
-            //    currTrack.trackId = message.track_data.get_Item((uint)i).track_id;
+            newDataClass.pitch_rate.data.valid = message.pitch_rate.data.valid;
+            newDataClass.pitch_rate.data.value = message.pitch_rate.data.value;
+            newDataClass.pitch_rate.is_current = message.pitch_rate.is_current;
+            newDataClass.pitch_rate.sensor = message.pitch_rate.sensor;
+            newDataClass.pitch_rate.time.valid = message.pitch_rate.time.valid;
+            newDataClass.pitch_rate.time.value.time.hours = message.pitch_rate.time.value.time.hours;
+            newDataClass.pitch_rate.time.value.time.minutes = message.pitch_rate.time.value.time.minutes;
+            newDataClass.pitch_rate.time.value.time.seconds = message.pitch_rate.time.value.time.seconds;
+            newDataClass.pitch_rate.time.value.time.c_seconds = message.pitch_rate.time.value.time.c_seconds;
+            newDataClass.pitch_rate.time.value.date.year = message.pitch_rate.time.value.date.year;
+            newDataClass.pitch_rate.time.value.date.month = message.pitch_rate.time.value.date.month;
+            newDataClass.pitch_rate.time.value.date.day = message.pitch_rate.time.value.date.day;
 
-            //    newDataClass.systemTracks.Add(currTrack);
-            //}
+            newDataClass.heave.data.valid = message.heave.data.valid;
+            newDataClass.heave.data.value = message.heave.data.value;
+            newDataClass.heave.is_current = message.heave.is_current;
+            newDataClass.heave.sensor = message.heave.sensor;
+            newDataClass.heave.time.valid = message.heave.time.valid;
+            newDataClass.heave.time.value.time.hours = message.heave.time.value.time.hours;
+            newDataClass.heave.time.value.time.minutes = message.heave.time.value.time.minutes;
+            newDataClass.heave.time.value.time.seconds = message.heave.time.value.time.seconds;
+            newDataClass.heave.time.value.time.c_seconds = message.heave.time.value.time.c_seconds;
+            newDataClass.heave.time.value.date.year = message.heave.time.value.date.year;
+            newDataClass.heave.time.value.date.month = message.heave.time.value.date.month;
+            newDataClass.heave.time.value.date.day = message.heave.time.value.date.day;
+
+            newDataClass.heave.data.valid = message.heave.data.valid;
+            newDataClass.heave.data.value = message.heave.data.value;
+            newDataClass.heave.is_current = message.heave.is_current;
+            newDataClass.heave.sensor = message.heave.sensor;
+            newDataClass.heave.time.valid = message.heave.time.valid;
+            newDataClass.heave.time.value.time.hours = message.heave.time.value.time.hours;
+            newDataClass.heave.time.value.time.minutes = message.heave.time.value.time.minutes;
+            newDataClass.heave.time.value.time.seconds = message.heave.time.value.time.seconds;
+            newDataClass.heave.time.value.time.c_seconds = message.heave.time.value.time.c_seconds;
+            newDataClass.heave.time.value.date.year = message.heave.time.value.date.year;
+            newDataClass.heave.time.value.date.month = message.heave.time.value.date.month;
+            newDataClass.heave.time.value.date.day = message.heave.time.value.date.day;
+
+            newDataClass.heave_rate.data.valid = message.heave_rate.data.valid;
+            newDataClass.heave_rate.data.value = message.heave_rate.data.value;
+            newDataClass.heave_rate.is_current = message.heave_rate.is_current;
+            newDataClass.heave_rate.sensor = message.heave_rate.sensor;
+            newDataClass.heave_rate.time.valid = message.heave_rate.time.valid;
+            newDataClass.heave_rate.time.value.time.hours = message.heave_rate.time.value.time.hours;
+            newDataClass.heave_rate.time.value.time.minutes = message.heave_rate.time.value.time.minutes;
+            newDataClass.heave_rate.time.value.time.seconds = message.heave_rate.time.value.time.seconds;
+            newDataClass.heave_rate.time.value.time.c_seconds = message.heave_rate.time.value.time.c_seconds;
+            newDataClass.heave_rate.time.value.date.year = message.heave_rate.time.value.date.year;
+            newDataClass.heave_rate.time.value.date.month = message.heave_rate.time.value.date.month;
+            newDataClass.heave_rate.time.value.date.day = message.heave_rate.time.value.date.day;
+
+            newDataClass.course_over_ground.data.valid = message.course_over_ground.data.valid;
+            newDataClass.course_over_ground.data.value = message.course_over_ground.data.value;
+            newDataClass.course_over_ground.is_current = message.course_over_ground.is_current;
+            newDataClass.course_over_ground.sensor = message.course_over_ground.sensor;
+            newDataClass.course_over_ground.time.valid = message.course_over_ground.time.valid;
+            newDataClass.course_over_ground.time.value.time.hours = message.course_over_ground.time.value.time.hours;
+            newDataClass.course_over_ground.time.value.time.minutes = message.course_over_ground.time.value.time.minutes;
+            newDataClass.course_over_ground.time.value.time.seconds = message.course_over_ground.time.value.time.seconds;
+            newDataClass.course_over_ground.time.value.time.c_seconds = message.course_over_ground.time.value.time.c_seconds;
+            newDataClass.course_over_ground.time.value.date.year = message.course_over_ground.time.value.date.year;
+            newDataClass.course_over_ground.time.value.date.month = message.course_over_ground.time.value.date.month;
+            newDataClass.course_over_ground.time.value.date.day = message.course_over_ground.time.value.date.day;
+
 
             return newDataClass;
 
