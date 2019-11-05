@@ -11,26 +11,26 @@ namespace TrackBeamParser
     {
         static IModel trackDataChannel;
 
-        public static void StartListening(Action<TrackData> funcThatWantTheData)
+        public static void StartListening(Action<SystemTracks> funcThatWantTheData)
         {
             IConnection connection = RabbitMQConnection.getConnection();
             trackDataChannel = connection.CreateModel();
 
-            trackDataChannel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
+            trackDataChannel.ExchangeDeclare(exchange: "LucidTrackData", type: ExchangeType.Fanout);
 
             trackDataChannel.QueueDeclare(queue: "track",
-                                 durable: true,
+                                 durable: false,
                                  exclusive: false,
-                                 autoDelete: false,
+                                 autoDelete: true,
                                  arguments: null);
 
-            trackDataChannel.QueueBind(queue: "track", exchange: "TrackData", routingKey: "");
+            trackDataChannel.QueueBind(queue: "track", exchange: "LucidTrackData", routingKey: "");
 
             var consumer = new EventingBasicConsumer(trackDataChannel);
             consumer.Received += (model, ea) =>
             {
                 byte[] body = ea.Body;
-                TrackData trackData = JsonConvert.DeserializeObject<TrackData>(Encoding.UTF8.GetString(body));
+                SystemTracks trackData = JsonConvert.DeserializeObject<SystemTracks>(Encoding.UTF8.GetString(body));
                 funcThatWantTheData(trackData);
             };
 

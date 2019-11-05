@@ -6,11 +6,11 @@ using System.Text;
 
 namespace TrackBeamParser
 {
-    public static class TrackBeamDataRabbitMQSender
+    public static class TrackBeamDataSender
     {
         static IModel beamTrackDataChannel;
 
-        static TrackBeamDataRabbitMQSender()
+        static TrackBeamDataSender()
         {
             IConnection connection = RabbitMQConnection.getConnection();
             beamTrackDataChannel = connection.CreateModel();

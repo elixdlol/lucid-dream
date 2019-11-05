@@ -4,32 +4,29 @@ using System.Text;
 
 namespace TrackBeamParser
 {
-    public class BeamMaker
+    public static class BeamMaker
     {
-        public void onReceiveTracks(/*List<TrackData>*/)
+        public static void onReceiveTracks(SystemTracks trackData)
         {
             //TODO
             double heading = 0;// = Parser.GetHeading();
-            int[] tracks = { };
 
             //retreive the actual beams from the BeamBuffer
             byte[][] beamArray = BeamsBuffer.getBeamsAndFlush();
 
-            foreach (var track in tracks)
+            foreach (var track in trackData.systemTracks)
             {
-                TrackBeamData trackBeamData = CalcBeams(0, heading, 0.0, beamArray);
-                // send via rabbitmq
+                TrackBeamData trackBeamData = CalcBeams(track.trackID, heading, track.relativeBearing, beamArray);
+                TrackBeamDataSender.sendTrackBeamData(trackBeamData);
             }
         }
 
-        public TrackBeamData CalcBeams(int trackNum, double heading, double RB, byte[][] beamArray)
+        public static TrackBeamData CalcBeams(long trackNum, double heading, double RB, byte[][] beamArray)
         {
             var trackBeamData = new TrackBeamData();
-            trackBeamData.TrackNum = trackNum;
+            trackBeamData.TrackNum = (int)trackNum;
 
-            //voodoo
-            //calc beam numbers and precentage from heading and rb
-
+            //TODO: BUG AT ALGORITM
             double trackDegree = (heading + RB) % 360;
             const double factor = 192 / 360;
             double beamNumber = trackDegree * factor;
@@ -38,9 +35,11 @@ namespace TrackBeamParser
             int beamNum2 = (int)(Math.Ceiling(beamNumber)); 
             double precentage = Math.Abs(beamNum2 - beamNumber);
 
-            
-            trackBeamData.Beam1 = beamArray[beamNum1];
-            trackBeamData.Beam2 = beamArray[beamNum2];
+            // TODO: return the first 2 beams for now..
+            trackBeamData.Beam1 = beamArray[0];
+            trackBeamData.Beam2 = beamArray[1];
+            //trackBeamData.Beam1 = beamArray[beamNum1];
+            //trackBeamData.Beam2 = beamArray[beamNum2];
             trackBeamData.Precentage = precentage;
 
             return trackBeamData;
