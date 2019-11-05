@@ -12,7 +12,8 @@ using LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_nav_data;
 using LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_bdt_track_data;
 using LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_system_target_data;
 using LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_own_boat_data;
-
+using LucidDream_BTD_Microservice;
+using Newtonsoft.Json;
 
 namespace LucidDreamSystem
 {
@@ -37,6 +38,7 @@ namespace LucidDreamSystem
 
         #region Properties
 
+        public RabbitMQSender rabbit;
         public LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_bdt_track_data.idde_itfmod_to_3pa_bdt_track_data_typeDataWriter BdtCasDataWriter
         {
             get { return m_BdtCasDataWriter; }
@@ -91,6 +93,8 @@ namespace LucidDreamSystem
         public void Init()
         {
             m_LucidDreamContractManager = new LucidDreamContractManager();
+            rabbit = new RabbitMQSender();
+            
             m_LucidDreamContractManager.LoadFromFile(contractPath);
             m_LucidDreamContractManager.VivifyAll();
             SetupDataWriters();
@@ -258,6 +262,10 @@ namespace LucidDreamSystem
         #region BdtCasDataReader Events
         public void BdtCasDataReaderOnSampleArrived(LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_bdt_track_data.idde_itfmod_to_3pa_bdt_track_data_typeDataReader dr, LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_bdt_track_data.idde_itfmod_to_3pa_bdt_track_data_type dataType, SampleInfo info, ValidityStatus validity)
         {
+
+            BDT_CAS_OriginalMessage converted_data = ConvertData(dataType);
+            string data = JsonConvert.SerializeObject(converted_data);
+            rabbit.send_data(data);
             Console.WriteLine("a new sample of \"idde_itfmod_to_3pa_bdt_track_data_type\" has arrived");
         }
 
@@ -270,7 +278,65 @@ namespace LucidDreamSystem
         #endregion
         #endregion
         #endregion
+
+        public BDT_CAS_OriginalMessage ConvertData(idde_itfmod_to_3pa_bdt_track_data_type message)
+        {
+            BDT_CAS_OriginalMessage newDataClass = new BDT_CAS_OriginalMessage();
+
+            newDataClass.timeStamp.time.hours = message.time_reference.time.hours;
+            newDataClass.timeStamp.time.minutes = message.time_reference.time.minutes;
+            newDataClass.timeStamp.time.seconds = message.time_reference.time.seconds;
+            newDataClass.timeStamp.time.c_seconds = message.time_reference.time.c_seconds;
+
+            newDataClass.timeStamp.date.day = message.time_reference.date.day;
+            newDataClass.timeStamp.date.month = message.time_reference.date.month;
+            newDataClass.timeStamp.date.year = message.time_reference.date.year;
+
+            for (int i = 0; i < message.track_data.Length; i++)
+            {
+                OriginalSystemTrack currTrack = new OriginalSystemTrack();
+                currTrack.approach_receed_indicator = message.track_data.get_Item((uint)i).approach_receed_indicator;
+                currTrack.bandwidth.valid = message.track_data.get_Item((uint)i).bandwidth.valid;
+                currTrack.bandwidth.upper = message.track_data.get_Item((uint)i).bandwidth.upper;
+                currTrack.bandwidth.lower = message.track_data.get_Item((uint)i).bandwidth.lower;
+                currTrack.bearing = message.track_data.get_Item((uint)i).bearing;
+                currTrack.bearingRate.valid = message.track_data.get_Item((uint)i).bearing_rate.valid;
+                currTrack.bearingRate.value = message.track_data.get_Item((uint)i).bearing_rate.value;
+                currTrack.constant_bearing_warning = message.track_data.get_Item((uint)i).constant_bearing_warning;
+                currTrack.integration_time = message.track_data.get_Item((uint)i).integration_time;
+                currTrack.integration_time_nominal = message.track_data.get_Item((uint)i).integration_time_nominal;
+                currTrack.integrat_time_selection_mode = message.track_data.get_Item((uint)i).integrat_time_selection_mode;
+
+                for (int j = 0; j < message.track_data.get_Item((uint)i).raw_bearing_candidates.Length; j++)
+                {
+                    currTrack.rawBearingCndidates.Add(new AngleValidType());
+                    currTrack.rawBearingCndidates[j].valid = message.track_data.get_Item((uint)i).raw_bearing_candidates.get_Item((uint)j).valid;
+                    currTrack.rawBearingCndidates[j].value = message.track_data.get_Item((uint)i).raw_bearing_candidates.get_Item((uint)j).value;
+                }
+
+                currTrack.state = message.track_data.get_Item((uint)i).state;
+                currTrack.s_n_ratio = message.track_data.get_Item((uint)i).s_n_ratio;
+                currTrack.target_level = message.track_data.get_Item((uint)i).target_level;
+
+                currTrack.timeStamp.time.hours = message.track_data.get_Item((uint)i).time_reference.time.hours;
+                currTrack.timeStamp.time.minutes = message.track_data.get_Item((uint)i).time_reference.time.minutes;
+                currTrack.timeStamp.time.seconds = message.track_data.get_Item((uint)i).time_reference.time.seconds;
+                currTrack.timeStamp.time.c_seconds = message.track_data.get_Item((uint)i).time_reference.time.c_seconds;
+
+                currTrack.timeStamp.date.day = message.track_data.get_Item((uint)i).time_reference.date.day;
+                currTrack.timeStamp.date.month = message.track_data.get_Item((uint)i).time_reference.date.month;
+                currTrack.timeStamp.date.year = message.track_data.get_Item((uint)i).time_reference.date.year;
+
+                currTrack.trackId = message.track_data.get_Item((uint)i).track_id;
+
+                newDataClass.systemTracks.Add(currTrack);
+            }
+
+            return newDataClass;
+
+        }
     }
+
 
     class SubscriberProgram
     {
