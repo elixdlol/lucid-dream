@@ -16,22 +16,44 @@ namespace lucidDBManager
 
         MongoDBServer db;
 
+        Manager manager;
+
         // system track helper types
         bool[] isKnownTarget;
         TimeStampType[] creationTime;
         TMAOriginalMessage lastTracksMessage;
 
 
-        public DataHandler(RabbitMQSender sender, MongoDBServer db)
+        public DataHandler(RabbitMQSender sender, MongoDBServer db, Manager mgr)
         {
             this.sender = sender;
             this.db = db;
+            this.manager = mgr;
             isKnownTarget = new bool[26];
             creationTime = new TimeStampType[26];
 
             for (int i = 0; i < isKnownTarget.Length; i++)
             {
                 isKnownTarget[i] = false;
+            }
+        }
+
+        public void ReceiveActionMessage(string message)
+        {
+            switch(message)
+            {
+                case "Record":
+                    manager.StartReceivingUAG();
+                    break;
+
+                case "Stop":
+                    manager.StopReceivingUAG();
+                    break;
+
+                case "Play":
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -87,19 +109,23 @@ namespace lucidDBManager
                 }
             }
 
-            foreach (var currTrack in lastTracksMessage.systemTracks)
+            if (lastTracksMessage != null)
             {
-                // check if track was deleted
-                if (!sysTracks.systemTracks.Exists(x => x.trackID == currTrack.trackId))
-                {
-                    isKnownTarget[currTrack.trackId - 1] = false;
-                    TrackData newTrack = new TrackData()
-                    {
-                        trackID = currTrack.trackId,
-                        trackState = State.DeleteTrack
-                    };
 
-                    sysTracks.systemTracks.Add(newTrack);
+                foreach (var currTrack in lastTracksMessage.systemTracks)
+                {
+                    // check if track was deleted
+                    if (!sysTracks.systemTracks.Exists(x => x.trackID == currTrack.trackId))
+                    {
+                        isKnownTarget[currTrack.trackId - 1] = false;
+                        TrackData newTrack = new TrackData()
+                        {
+                            trackID = currTrack.trackId,
+                            trackState = State.DeleteTrack
+                        };
+
+                        sysTracks.systemTracks.Add(newTrack);
+                    }
                 }
             }
 
@@ -125,11 +151,12 @@ namespace lucidDBManager
             OwnBoatData ownBoat = new OwnBoatData();
 
             // convert
-            ownBoat.timeZone = message.timeZone;
-            ownBoat.heading = message.heading;
-            ownBoat.pitch = message.pitch;
-            ownBoat.roll = message.roll;
-            ownBoat.heave = message.heave;
+            ownBoat.timeStamp = convertTime(message.systemTime.time.value);
+            ownBoat.timeZone = message.timeZone.data.value;
+            ownBoat.heading = message.heading.data.value;
+            ownBoat.pitch = message.pitch.data.value;
+            ownBoat.roll = message.roll.data.value;
+            ownBoat.heave = message.heave.data.value;
 
 
             sender.SendOwnBoatData(ownBoat);
@@ -152,17 +179,17 @@ namespace lucidDBManager
             return newType;
         }
 
-        public void GetOfflineTrackData()
+        public void SendOfflineTrackData()
         {
             // get track data by id from db
         }
 
-        public void GetOfflineAudioFile()
+        public void SendOfflineAudioFile()
         {
             // get wav file by id
         }
 
-        public void GetOfflineOwnBoatData()
+        public void SendOfflineOwnBoatData()
         {
             // get own boat data by id from db
         }
