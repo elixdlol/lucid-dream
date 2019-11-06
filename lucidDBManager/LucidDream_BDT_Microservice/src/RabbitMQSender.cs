@@ -36,7 +36,7 @@ namespace LucidDream_BTD_Microservice
                
 
                 Console.WriteLine(" Press [enter] to exit.");
-                Console.ReadLine();
+                //Console.ReadLine();
             }
         }
 

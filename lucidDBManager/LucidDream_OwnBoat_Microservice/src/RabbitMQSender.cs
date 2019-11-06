@@ -36,7 +36,7 @@ namespace LucidDreamSystem
                
 
                 Console.WriteLine(" Press [enter] to exit.");
-                Console.ReadLine();
+                //Console.ReadLine();
             }
         }
 
