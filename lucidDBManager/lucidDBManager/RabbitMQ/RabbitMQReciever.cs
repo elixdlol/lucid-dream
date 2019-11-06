@@ -15,13 +15,13 @@ namespace lucidDBManager.RabbitMQ
 
         IConnection Connection { get; set; }
 
-        IModel TMAChannel { get; set; }
-
-        IModel OwnBoatChannel { get; set; }
-
+        IModel Channel { get; set; }
+        
         EventingBasicConsumer TMAConsumer { get; set; }
 
         EventingBasicConsumer OwnBoatConsumer { get; set; }
+
+        EventingBasicConsumer ActionConsumer { get; set; }
 
         DataHandler DataHandler { get; set; }
 
@@ -31,38 +31,58 @@ namespace lucidDBManager.RabbitMQ
             Factory = new ConnectionFactory() { HostName = "localhost" };
             Connection = Factory.CreateConnection();
 
+            InitFromGUIActionReceiver();
+        }
 
-            TMAChannel = Connection.CreateModel();
-            TMAChannel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
-            TMAChannel.QueueDeclare("UAGTrackDataQueue");
-            TMAChannel.QueueBind(queue: "UAGTrackDataQueue",
+        public void StartRecording()
+        {
+            InitFromUAGTMAReceiver();
+            InitFromUAGOwnBoatReceiver();
+        }
+
+        public void StopRecording()
+        {
+            // Fix!!!!
+            Channel.QueueDelete("OwnBoat");
+            Channel.QueueDelete("TrackData");
+        }
+
+        private void InitFromUAGTMAReceiver()
+        {
+
+            Channel = Connection.CreateModel();
+            Channel.ExchangeDeclare(exchange: "TrackData", type: ExchangeType.Fanout);
+            Channel.QueueDeclare("UAGTrackDataQueue");
+            Channel.QueueBind(queue: "UAGTrackDataQueue",
                               exchange: "TrackData",
-                              routingKey: "");            
+                              routingKey: "");
 
-            TMAConsumer = new EventingBasicConsumer(TMAChannel);
+            TMAConsumer = new EventingBasicConsumer(Channel);
             TMAConsumer.Received += (model, ea) =>
             {
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
 
-                TMAOriginalMessage tmaMessage = JsonConvert.DeserializeObject< TMAOriginalMessage>(message);
+                TMAOriginalMessage tmaMessage = JsonConvert.DeserializeObject<TMAOriginalMessage>(message);
 
 
                 DataHandler.ReceiveTMAData(tmaMessage);
             };
 
-            TMAChannel.BasicConsume(queue: "UAGTrackDataQueue",
+            Channel.BasicConsume(queue: "UAGTrackDataQueue",
                                 autoAck: true,
                                 consumer: TMAConsumer);
+        }
 
-
-            OwnBoatChannel = Connection.CreateModel();
-            OwnBoatChannel.ExchangeDeclare(exchange: "OwnBoatData", type: ExchangeType.Fanout);
-            OwnBoatChannel.QueueDeclare("UAGOwnBoatQueue");
-            OwnBoatChannel.QueueBind(queue: "UAGOwnBoatQueue",
+        private void InitFromUAGOwnBoatReceiver()
+        {
+            Channel = Connection.CreateModel();
+            Channel.ExchangeDeclare(exchange: "OwnBoatData", type: ExchangeType.Fanout);
+            Channel.QueueDeclare("UAGOwnBoatQueue");
+            Channel.QueueBind(queue: "UAGOwnBoatQueue",
                               exchange: "OwnBoatData",
                               routingKey: "");
-            OwnBoatConsumer = new EventingBasicConsumer(OwnBoatChannel);
+            OwnBoatConsumer = new EventingBasicConsumer(Channel);
             OwnBoatConsumer.Received += (model, ea) =>
             {
                 var body = ea.Body;
@@ -74,9 +94,33 @@ namespace lucidDBManager.RabbitMQ
             };
 
 
-            OwnBoatChannel.BasicConsume(queue: "UAGOwnBoatQueue",
+            Channel.BasicConsume(queue: "UAGOwnBoatQueue",
                                 autoAck: true,
                                 consumer: OwnBoatConsumer);
+        }
+
+        private void InitFromGUIActionReceiver()
+        {
+
+            Channel = Connection.CreateModel();
+            Channel.ExchangeDeclare(exchange: "Action", type: ExchangeType.Fanout);
+            Channel.QueueDeclare("GuiActionQueue");
+            Channel.QueueBind(queue: "GuiActionQueue",
+                              exchange: "Action",
+                              routingKey: "");
+
+            ActionConsumer = new EventingBasicConsumer(Channel);
+            ActionConsumer.Received += (model, ea) =>
+            {
+                var body = ea.Body;
+                var message = Encoding.UTF8.GetString(body);
+
+                DataHandler.ReceiveActionMessage(message);
+            };
+
+            Channel.BasicConsume(queue: "GuiActionQueue",
+                                autoAck: true,
+                                consumer: ActionConsumer);
         }
 
     }
