@@ -8,7 +8,6 @@ namespace TrackBeamParser
     {
         public static void onReceiveTracks(SystemTracks trackData)
         {
-            //TODO
             double heading = BeamsBuffer.Heading;
 
             //retreive the actual beams from the BeamBuffer
@@ -27,18 +26,15 @@ namespace TrackBeamParser
             trackBeamData.TrackNum = (int)trackNum;
 
             double trackDegree = (heading + RB) % 360;
-            const double factor = 192 / 360;
+            const double factor = 192.0 / 360.0;
             double beamNumber = trackDegree * factor;
 
             int beamNum1 = (int)(Math.Floor(beamNumber));
             int beamNum2 = (int)(Math.Ceiling(beamNumber)); 
             double precentage = Math.Abs(beamNum2 - beamNumber);
 
-            // TODO: return the first 2 beams for now..
-            trackBeamData.Beam1 = beamArray[55];
-            trackBeamData.Beam2 = beamArray[43];
-            //trackBeamData.Beam1 = beamArray[beamNum1];
-            //trackBeamData.Beam2 = beamArray[beamNum2];
+            trackBeamData.Beam1 = beamArray[beamNum1];
+            trackBeamData.Beam2 = beamArray[beamNum2];
             trackBeamData.Precentage = precentage;
 
             return trackBeamData;
