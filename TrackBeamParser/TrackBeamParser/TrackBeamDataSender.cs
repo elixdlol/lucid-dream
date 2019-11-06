@@ -16,18 +16,15 @@ namespace TrackBeamParser
             beamTrackDataChannel = connection.CreateModel();
 
             beamTrackDataChannel.ExchangeDeclare(exchange: "beamTrackData",
-                                                 type: ExchangeType.Fanout,
-                                                 durable: true,
-                                                 autoDelete: false,
-                                                 arguments: null);
+                                                 type: ExchangeType.Fanout);
         }
 
         public static void sendTrackBeamData(TrackBeamData trackBeamData)
         {
             byte[] body = Encoding.Default.GetBytes(JsonConvert.SerializeObject(trackBeamData));
 
-            beamTrackDataChannel.BasicPublish(exchange: "",
-                                              routingKey: "beamTrackData",
+            beamTrackDataChannel.BasicPublish(exchange: "beamTrackData",
+                                              routingKey: "",
                                               basicProperties: null,
                                               body: body);
         }

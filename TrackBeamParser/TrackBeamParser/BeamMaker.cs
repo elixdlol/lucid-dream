@@ -26,7 +26,6 @@ namespace TrackBeamParser
             var trackBeamData = new TrackBeamData();
             trackBeamData.TrackNum = (int)trackNum;
 
-            //TODO: BUG AT ALGORITM
             double trackDegree = (heading + RB) % 360;
             const double factor = 192 / 360;
             double beamNumber = trackDegree * factor;
