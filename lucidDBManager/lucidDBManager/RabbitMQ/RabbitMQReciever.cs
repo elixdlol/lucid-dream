@@ -31,8 +31,20 @@ namespace lucidDBManager.RabbitMQ
             Factory = new ConnectionFactory() { HostName = "localhost" };
             Connection = Factory.CreateConnection();
 
+            InitFromGUIActionReceiver();
+        }
+
+        public void StartRecording()
+        {
             InitFromUAGTMAReceiver();
             InitFromUAGOwnBoatReceiver();
+        }
+
+        public void StopRecording()
+        {
+            // Fix!!!!
+            Channel.QueueDelete("OwnBoat");
+            Channel.QueueDelete("TrackData");
         }
 
         private void InitFromUAGTMAReceiver()
@@ -101,7 +113,9 @@ namespace lucidDBManager.RabbitMQ
             ActionConsumer.Received += (model, ea) =>
             {
                 var body = ea.Body;
-                var message = Encoding.UTF8.GetString(body);                
+                var message = Encoding.UTF8.GetString(body);
+
+                DataHandler.ReceiveActionMessage(message);
             };
 
             Channel.BasicConsume(queue: "GuiActionQueue",

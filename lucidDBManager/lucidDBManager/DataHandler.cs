@@ -16,22 +16,44 @@ namespace lucidDBManager
 
         MongoDBServer db;
 
+        Manager manager;
+
         // system track helper types
         bool[] isKnownTarget;
         TimeStampType[] creationTime;
         TMAOriginalMessage lastTracksMessage;
 
 
-        public DataHandler(RabbitMQSender sender, MongoDBServer db)
+        public DataHandler(RabbitMQSender sender, MongoDBServer db, Manager mgr)
         {
             this.sender = sender;
             this.db = db;
+            this.manager = mgr;
             isKnownTarget = new bool[26];
             creationTime = new TimeStampType[26];
 
             for (int i = 0; i < isKnownTarget.Length; i++)
             {
                 isKnownTarget[i] = false;
+            }
+        }
+
+        public void ReceiveActionMessage(string message)
+        {
+            switch(message)
+            {
+                case "Record":
+                    manager.StartReceivingUAG();
+                    break;
+
+                case "Stop":
+                    manager.StopReceivingUAG();
+                    break;
+
+                case "Play":
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -157,17 +179,17 @@ namespace lucidDBManager
             return newType;
         }
 
-        public void GetOfflineTrackData()
+        public void SendOfflineTrackData()
         {
             // get track data by id from db
         }
 
-        public void GetOfflineAudioFile()
+        public void SendOfflineAudioFile()
         {
             // get wav file by id
         }
 
-        public void GetOfflineOwnBoatData()
+        public void SendOfflineOwnBoatData()
         {
             // get own boat data by id from db
         }
