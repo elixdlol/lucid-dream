@@ -16,10 +16,10 @@ namespace TrackBeamParser
                 {
                     if (segToBuffer.IsValid)
                     {
-                        if(segToBuffer.Data.Count < 192*64)
-                        {
+                        //if(segToBuffer.Data.Count < 192*64)
+                        //{
                             BeamsBuffer.WriteBeamsFromDictionary(segToBuffer.GetBeamsValues());
-                        }
+                        //}
                     }
                 }
                 
