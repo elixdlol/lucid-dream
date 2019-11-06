@@ -35,8 +35,8 @@ namespace TrackBeamParser
             double precentage = Math.Abs(beamNum2 - beamNumber);
 
             // TODO: return the first 2 beams for now..
-            trackBeamData.Beam1 = beamArray[0];
-            trackBeamData.Beam2 = beamArray[1];
+            trackBeamData.Beam1 = beamArray[55];
+            trackBeamData.Beam2 = beamArray[43];
             //trackBeamData.Beam1 = beamArray[beamNum1];
             //trackBeamData.Beam2 = beamArray[beamNum2];
             trackBeamData.Precentage = precentage;
