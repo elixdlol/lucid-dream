@@ -23,21 +23,24 @@ namespace TrackBeamParser
             });
             thread.Start();
 
-
             byte[] a = File.ReadAllBytes(@"C:\Users\96ron\Desktop\האקויק ראגב\CAS_HAKATON.rec");
 
             int i = 0;
+            var timestart = DateTime.Now;
+
             while (i < a.Length)
             {
                 byte[] part = new byte[1400];
                 Buffer.BlockCopy(a, i, part, 0, 1400);
-                NOP(0.0001);
+                NOP(0.000087);
                 CASSubSegment newCAS = new CASSubSegment(part);
                 CASSegmentManger.BufferManger(newCAS);
                 i += 1400;
             }
 
-            Console.WriteLine(" Press [enter] to exit.");
+            Console.WriteLine("***** FINISHED *****");
+            var TotalSeconds = (DateTime.Now - timestart).TotalSeconds;
+            Console.WriteLine($"TotalSeconds: {TotalSeconds}");
             Console.ReadLine();
         }
 

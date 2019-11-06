@@ -8,7 +8,10 @@ namespace BestTrackBeamSticher
 {
     class Program
     {
-        static WaveFileWriter waveFileWriter;
+        static MemoryStream ms = new MemoryStream();
+        static WaveFormat waveFormat = new WaveFormat(31250, 16, 1);
+        static WaveFileWriter waveFileWriter = new WaveFileWriter(new IgnoreDisposeStream(ms), waveFormat);
+        static int i = 0;
 
         static void Main(string[] args)
         {
@@ -17,17 +20,29 @@ namespace BestTrackBeamSticher
                 TrackWithStitchedBeam trackWithStitchedBeam = Stitcher.stitch(trackBeamData);
                 TrackWithStitchedBeamSender.sendTrackWithStitchedBeam(trackWithStitchedBeam);
 
-                byte[] wavBytes = trackWithStitchedBeam.StitchedBeam;
-                var file = $@"C:\Users\96ron\Desktop\האקויק ראגב\ronen44.wav";
-                var waveFormat = new WaveFormat(31250, 16, 1);
-
-                if (waveFileWriter == null)
-                {
-                    waveFileWriter = new WaveFileWriter(file, waveFormat);
-                }
-                waveFileWriter.Write(wavBytes, 0, wavBytes.Length);
-                waveFileWriter.Flush();
+                playFirstTrackAudio(trackWithStitchedBeam);
             });
+        }
+
+        static void playFirstTrackAudio(TrackWithStitchedBeam trackWithStitchedBeam)
+        {
+            if (trackWithStitchedBeam.TrackNum == 2)
+            {
+                var t = ms.Position;
+                ms.Position = ms.Length;
+                waveFileWriter.Write(trackWithStitchedBeam.StitchedBeam, 0, trackWithStitchedBeam.StitchedBeam.Length);
+                waveFileWriter.Flush();
+                ms.Position = t;
+
+                if (++i == 1)
+                {
+                    var provider = new RawSourceWaveStream(ms, waveFormat);
+                    var player = new WaveOutEvent();
+                    player.Init(provider);
+                    player.Play();
+                    Console.WriteLine("Playing");
+                }
+            }
         }
     }
 }

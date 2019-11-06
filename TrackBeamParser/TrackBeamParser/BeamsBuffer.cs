@@ -35,7 +35,6 @@ namespace TrackBeamParser
                 }
 
                 indexOfEndInBuffers += beamLength;
-                Console.WriteLine("BUFFER SIZE: " + indexOfEndInBuffers);
             }
         }
 
@@ -43,6 +42,9 @@ namespace TrackBeamParser
         {
             lock (Locker)
             {
+                if (indexOfEndInBuffers == 0)
+                    return null;
+
                 byte[][] beamArray = new byte[beamsNumber][];
                 int j = 0;
 
@@ -60,7 +62,6 @@ namespace TrackBeamParser
 
         private static void cleanBeams()
         {
-            Console.WriteLine("*** CLEANING BUFFER ***");
             indexOfEndInBuffers = 0;
             Beams = new byte[beamsNumber][];
 

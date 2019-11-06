@@ -29,7 +29,7 @@ namespace TrackBeamParser
                 {
                     if(subSegmentToAdd.segID == 10)
                     {
-                        Heading = BitConverter.ToDouble(subSegmentToAdd.heading);
+                        Heading = BitConverter.ToInt16(subSegmentToAdd.heading);
                     }
                     Data.AddRange(subSegmentToAdd.data);
                     SubSegments.Add(subSegmentToAdd.segID, subSegmentToAdd);
