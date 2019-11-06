@@ -24,11 +24,11 @@ namespace LucidDreamSystem
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.ExchangeDeclare(exchange: "LucidOwnBoatData", type: ExchangeType.Fanout);
+                channel.ExchangeDeclare(exchange: "OwnBoatData", type: ExchangeType.Fanout);
 
                 
                 var body = Encoding.UTF8.GetBytes(data);
-                channel.BasicPublish(exchange: "LucidOwnBoatData",
+                channel.BasicPublish(exchange: "OwnBoatData",
                                      routingKey: "",
                                      basicProperties: null,
                                      body: body);
