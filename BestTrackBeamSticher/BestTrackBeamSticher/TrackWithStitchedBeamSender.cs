@@ -27,8 +27,8 @@ namespace BestTrackBeamStitcher
         {
             byte[] body = Encoding.Default.GetBytes(JsonConvert.SerializeObject(trackWithStitchedBeam));
 
-            TrackWithStitchedBeamChannel.BasicPublish(exchange: "",
-                                              routingKey: "trackWithStitchedBeamData",
+            TrackWithStitchedBeamChannel.BasicPublish(exchange: "trackWithStitchedBeamData",
+                                              routingKey: "",
                                               basicProperties: null,
                                               body: body);
         }

@@ -9,8 +9,12 @@ namespace TrackBeamParser
         const int beamsNumber = 192;
         const int maxBufferSize = 1000000;
         static volatile int indexOfEndInBuffers;
+
+
         static volatile byte[][] Beams;
         public static Object Locker = new Object();
+
+        public static double Heading { get; internal set; }
 
         static BeamsBuffer()
         {

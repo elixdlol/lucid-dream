@@ -12,23 +12,24 @@ namespace TrackBeamParser
         {
             if (subSegmentFromUdp.segID == 1)
             {
-                if(segToBuffer != null)
+                if (segToBuffer != null)
                 {
                     if (segToBuffer.IsValid)
                     {
                         //if(segToBuffer.Data.Count < 192*64)
                         //{
-                            BeamsBuffer.WriteBeamsFromDictionary(segToBuffer.GetBeamsValues());
+                        BeamsBuffer.WriteBeamsFromDictionary(segToBuffer.GetBeamsValues());
+                        BeamsBuffer.Heading = segToBuffer.Heading;
                         //}
                     }
                 }
-                
+
 
                 segToBuffer = new CASSegment(subSegmentFromUdp);
             }
             else
             {
-                if(segToBuffer != null)
+                if (segToBuffer != null)
                 {
                     segToBuffer.AddSubSegment(subSegmentFromUdp);
                 }
