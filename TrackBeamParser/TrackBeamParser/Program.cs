@@ -12,16 +12,6 @@ namespace TrackBeamParser
     {
         static void Main(string[] args)
         {
-            //Thread thread = new Thread(()=>
-            //{
-            //    TracksDataReceiver.StartListening((trackData)=>
-            //    {
-            //        BeamMaker.onReceiveTracks(trackData);
-            //    });
-            //});
-            //thread.Start();
-
-
             Thread thread = new Thread(() =>
             {
                 MicroLibrary.MicroTimer microTimer = new MicroLibrary.MicroTimer();
@@ -88,13 +78,22 @@ namespace TrackBeamParser
         {
             var systemTracks = new SystemTracks();
             systemTracks.timeStamp.seconds = 10;
+
             var trackData = new TrackData();
             trackData.trackID = 1;
             trackData.trackState = State.UpdateTrack;
             trackData.relativeBearing = 90;
             trackData.creationTime.day = 3;
+
+            var trackData2 = new TrackData();
+            trackData2.trackID = 2;
+            trackData2.trackState = State.UpdateTrack;
+            trackData2.relativeBearing = 270;
+            trackData2.creationTime.day = 4;
+
             systemTracks.systemTracks = new List<TrackData>();
             systemTracks.systemTracks.Add(trackData);
+            systemTracks.systemTracks.Add(trackData2);
             BeamMaker.onReceiveTracks(systemTracks);
         }
     }
