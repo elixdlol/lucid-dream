@@ -9,7 +9,7 @@ namespace TrackBeamParser
         public static void onReceiveTracks(SystemTracks trackData)
         {
             //TODO
-            double heading = 0;// = Parser.GetHeading();
+            double heading = BeamsBuffer.Heading;
 
             //retreive the actual beams from the BeamBuffer
             byte[][] beamArray = BeamsBuffer.getBeamsAndFlush();

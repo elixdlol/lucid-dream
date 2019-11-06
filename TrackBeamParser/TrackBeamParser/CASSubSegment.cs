@@ -9,6 +9,7 @@ namespace TrackBeamParser
         public int segID;
         public byte[] header;
         public byte[] data;
+        public byte[] heading;
 
         public CASSubSegment(byte[] subSegment)
         {
@@ -16,6 +17,7 @@ namespace TrackBeamParser
             int.TryParse(subSegment[4].ToString(), out id);
             segID = id;
             int dataStartPoint;
+            int headingStartPoint = 1224;
 
             isTen = 0;
             switch (id)
@@ -35,6 +37,7 @@ namespace TrackBeamParser
             }
             header = new byte[dataStartPoint];
             data = new byte[1400 - dataStartPoint - isTen];
+            heading = new byte[2];
 
             for (int i = 0; i < dataStartPoint; i++)
             {
@@ -46,6 +49,13 @@ namespace TrackBeamParser
                 data[j] = subSegment[dataStartPoint + j];
             }
 
+            if (segID == 10)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    heading[i] = subSegment[headingStartPoint + dataStartPoint + i];
+                }
+            }
 
         }
     }

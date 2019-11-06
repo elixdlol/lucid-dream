@@ -10,6 +10,7 @@ namespace TrackBeamParser
         public bool IsValid;
         public List<byte> Data;
         public Dictionary<int, CASSubSegment> SubSegments;
+        public double Heading { get; set; }
 
         public CASSegment(CASSubSegment subSegmentToAdd)
         {
@@ -26,6 +27,10 @@ namespace TrackBeamParser
             {
                 try
                 {
+                    if(subSegmentToAdd.segID == 10)
+                    {
+                        Heading = BitConverter.ToDouble(subSegmentToAdd.heading);
+                    }
                     Data.AddRange(subSegmentToAdd.data);
                     SubSegments.Add(subSegmentToAdd.segID, subSegmentToAdd);
                 }
