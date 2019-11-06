@@ -87,19 +87,23 @@ namespace lucidDBManager
                 }
             }
 
-            foreach (var currTrack in lastTracksMessage.systemTracks)
+            if (lastTracksMessage != null)
             {
-                // check if track was deleted
-                if (!sysTracks.systemTracks.Exists(x => x.trackID == currTrack.trackId))
-                {
-                    isKnownTarget[currTrack.trackId - 1] = false;
-                    TrackData newTrack = new TrackData()
-                    {
-                        trackID = currTrack.trackId,
-                        trackState = State.DeleteTrack
-                    };
 
-                    sysTracks.systemTracks.Add(newTrack);
+                foreach (var currTrack in lastTracksMessage.systemTracks)
+                {
+                    // check if track was deleted
+                    if (!sysTracks.systemTracks.Exists(x => x.trackID == currTrack.trackId))
+                    {
+                        isKnownTarget[currTrack.trackId - 1] = false;
+                        TrackData newTrack = new TrackData()
+                        {
+                            trackID = currTrack.trackId,
+                            trackState = State.DeleteTrack
+                        };
+
+                        sysTracks.systemTracks.Add(newTrack);
+                    }
                 }
             }
 
@@ -125,6 +129,7 @@ namespace lucidDBManager
             OwnBoatData ownBoat = new OwnBoatData();
 
             // convert
+            ownBoat.timeStamp = convertTime(message.systemTime.time.value);
             ownBoat.timeZone = message.timeZone;
             ownBoat.heading = message.heading;
             ownBoat.pitch = message.pitch;

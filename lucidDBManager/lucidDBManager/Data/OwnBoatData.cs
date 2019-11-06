@@ -7,6 +7,7 @@ namespace lucidDBManager.Data
 {
     public class OwnBoatData
     {
+        public TimeType timeStamp;
         public Timezone timeZone = new Timezone();
         public Heading heading = new Heading();
         public Roll roll = new Roll();
