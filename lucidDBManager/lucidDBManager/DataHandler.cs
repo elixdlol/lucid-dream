@@ -130,11 +130,11 @@ namespace lucidDBManager
 
             // convert
             ownBoat.timeStamp = convertTime(message.systemTime.time.value);
-            ownBoat.timeZone = message.timeZone;
-            ownBoat.heading = message.heading;
-            ownBoat.pitch = message.pitch;
-            ownBoat.roll = message.roll;
-            ownBoat.heave = message.heave;
+            ownBoat.timeZone = message.timeZone.data.value;
+            ownBoat.heading = message.heading.data.value;
+            ownBoat.pitch = message.pitch.data.value;
+            ownBoat.roll = message.roll.data.value;
+            ownBoat.heave = message.heave.data.value;
 
 
             sender.SendOwnBoatData(ownBoat);
