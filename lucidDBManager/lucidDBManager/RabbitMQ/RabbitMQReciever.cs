@@ -11,12 +11,13 @@ namespace lucidDBManager.RabbitMQ
 {
     public class RabbitMQReciever
     {
+
         ConnectionFactory Factory { get; set; }
 
         IConnection Connection { get; set; }
 
         IModel Channel { get; set; }
-        
+
         EventingBasicConsumer TMAConsumer { get; set; }
 
         EventingBasicConsumer OwnBoatConsumer { get; set; }
@@ -43,8 +44,8 @@ namespace lucidDBManager.RabbitMQ
         public void StopRecording()
         {
             // Fix!!!!
-            Channel.QueueDelete("OwnBoat");
-            Channel.QueueDelete("TrackData");
+            Channel.ExchangeDelete("TrackData");
+            Channel.ExchangeDelete("OwnBoatData");
         }
 
         private void InitFromUAGTMAReceiver()
@@ -70,8 +71,8 @@ namespace lucidDBManager.RabbitMQ
             };
 
             Channel.BasicConsume(queue: "UAGTrackDataQueue",
-                                autoAck: true,
-                                consumer: TMAConsumer);
+                                 autoAck: true,
+                                 consumer: TMAConsumer);
         }
 
         private void InitFromUAGOwnBoatReceiver()

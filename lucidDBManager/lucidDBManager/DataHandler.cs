@@ -40,7 +40,7 @@ namespace lucidDBManager
 
         public void ReceiveActionMessage(string message)
         {
-            switch(message)
+            switch (message)
             {
                 case "Record":
                     manager.StartReceivingUAG();
@@ -111,20 +111,22 @@ namespace lucidDBManager
 
             if (lastTracksMessage != null)
             {
-
                 foreach (var currTrack in lastTracksMessage.systemTracks)
                 {
-                    // check if track was deleted
-                    if (!sysTracks.systemTracks.Exists(x => x.trackID == currTrack.trackId))
+                    if (currTrack.trackId != 0)
                     {
-                        isKnownTarget[currTrack.trackId - 1] = false;
-                        TrackData newTrack = new TrackData()
+                        // check if track was deleted
+                        if (!sysTracks.systemTracks.Exists(x => x.trackID == currTrack.trackId))
                         {
-                            trackID = currTrack.trackId,
-                            trackState = State.DeleteTrack
-                        };
+                            isKnownTarget[currTrack.trackId - 1] = false;
+                            TrackData newTrack = new TrackData()
+                            {
+                                trackID = currTrack.trackId,
+                                trackState = State.DeleteTrack
+                            };
 
-                        sysTracks.systemTracks.Add(newTrack);
+                            sysTracks.systemTracks.Add(newTrack);
+                        }
                     }
                 }
             }
