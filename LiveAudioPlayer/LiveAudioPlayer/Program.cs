@@ -19,6 +19,11 @@ namespace LiveAudioPlayer
                 LiveAudioPlayer.CommandRecieved(command);
             });
 
+            //playDummyCommands();
+        }
+
+        private static void playDummyCommands()
+        {
             Thread.Sleep(7000);
             string commandDummy = "1";
             LiveAudioPlayer.CommandRecieved(commandDummy);
