@@ -56,29 +56,32 @@ namespace lucidDBManager.mongoDB
 
             collection.FindOneAndDelete(element);
         }
-              
 
-        public List<SystemTracks> getTracksByID(long trackID) 
+
+        public List<SystemTracks> getTracksByID(long trackID)
         {
             IMongoCollection<BsonDocument> collection = _db.GetCollection<BsonDocument>("SystemTrack");
             var filter = Builders<BsonDocument>.Filter.Eq("systemTracks.trackID", trackID);
             var result = collection.Find(filter).ToList();
             var listOfTMAMessage = new List<SystemTracks>();
-            foreach(var mes in result)
+            foreach (var mes in result)
             {
                 var x = new JsonWriterSettings { OutputMode = JsonOutputMode.Strict };
                 JObject json = JObject.Parse(mes.ToJson<MongoDB.Bson.BsonDocument>(x));
 
                 SystemTracks tmaMessage = Newtonsoft.Json.JsonConvert.DeserializeObject<SystemTracks>(json.ToString());
-                
+
                 SystemTracks UpdatedMessge = new SystemTracks();
                 UpdatedMessge.timeStamp = tmaMessage.timeStamp;
+
+                bool isTrakIDFounded = false;
 
                 for (int i = 0; i < tmaMessage.systemTracks.Count; i++)
                 {
 
-                    if(tmaMessage.systemTracks[i].trackID == trackID)
+                    if (tmaMessage.systemTracks[i].trackID == trackID)
                     {
+                        isTrakIDFounded = true;
                         TrackData neededTrack = new TrackData()
                         {
                             creationTime = tmaMessage.systemTracks[i].creationTime,
@@ -92,7 +95,11 @@ namespace lucidDBManager.mongoDB
                         UpdatedMessge.systemTracks.Add(neededTrack);
                     }
                 }
-                listOfTMAMessage.Add(UpdatedMessge);
+                if (isTrakIDFounded)
+                {
+                    listOfTMAMessage.Add(UpdatedMessge);
+                }
+
             }
 
             return listOfTMAMessage;
@@ -115,7 +122,7 @@ namespace lucidDBManager.mongoDB
                 SystemTracks trackMessage = Newtonsoft.Json.JsonConvert.DeserializeObject<SystemTracks>(json.ToString());
 
                 TrackMessages.Add(trackMessage);
-            }            
+            }
 
             return TrackMessages;
         }
@@ -156,8 +163,8 @@ namespace lucidDBManager.mongoDB
                 OwnBoatData ownBoatRecord = Newtonsoft.Json.JsonConvert.DeserializeObject<OwnBoatData>(json.ToString());
 
                 result.Add(ownBoatRecord);
-            }          
-            
+            }
+
             return result;
         }
 
