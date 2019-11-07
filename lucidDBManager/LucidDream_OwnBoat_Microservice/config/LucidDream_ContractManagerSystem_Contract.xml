@@ -53,24 +53,7 @@
         </DataWriterQos>
       </DataWriter>
       <DataWriter name="OwnBoatWriter" topicName="OwnBoat">
-        <DataWriterQos profile="DEFAULT">
-          <reliability>
-            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
-          </reliability>
-          <durability>
-            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
-          </durability>
-          <deadline>
-            <period>
-              <sec>3</sec>
-              <nanosec>0</nanosec>
-            </period>
-          </deadline>
-          <history>
-            <kind>KEEP_LAST_HISTORY_QOS</kind>
-            <depth>1</depth>
-          </history>
-        </DataWriterQos>
+        
       </DataWriter>
       <DataWriter name="NavDataWriter" topicName="Nav">
         <DataWriterQos profile="DEFAULT">
@@ -93,46 +76,12 @@
         </DataWriterQos>
       </DataWriter>
       <DataWriter name="BdtCasDataWriter" topicName="BdtCas">
-        <DataWriterQos profile="DEFAULT">
-          <reliability>
-            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
-          </reliability>
-          <durability>
-            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
-          </durability>
-          <deadline>
-            <period>
-              <sec>3</sec>
-              <nanosec>0</nanosec>
-            </period>
-          </deadline>
-          <history>
-            <kind>KEEP_LAST_HISTORY_QOS</kind>
-            <depth>1</depth>
-          </history>
-        </DataWriterQos>
+        
       </DataWriter>
     </DataWriters>
     <DataReaders>
       <DataReader name="OwnBoatReader" topicName="OwnBoat">
-        <DataReaderQos profile="DEFAULT">
-          <reliability>
-            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
-          </reliability>
-          <durability>
-            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
-          </durability>
-          <deadline>
-            <period>
-              <sec>3</sec>
-              <nanosec>0</nanosec>
-            </period>
-          </deadline>
-          <history>
-            <kind>KEEP_LAST_HISTORY_QOS</kind>
-            <depth>1</depth>
-          </history>
-        </DataReaderQos>
+        
       </DataReader>
       <DataReader name="NavDataReader" topicName="Nav">
         <DataReaderQos profile="DEFAULT">
@@ -175,24 +124,7 @@
         </DataReaderQos>
       </DataReader>
       <DataReader name="BdtCasDataReader" topicName="BdtCas">
-        <DataReaderQos profile="DEFAULT">
-          <reliability>
-            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
-          </reliability>
-          <durability>
-            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
-          </durability>
-          <deadline>
-            <period>
-              <sec>3</sec>
-              <nanosec>0</nanosec>
-            </period>
-          </deadline>
-          <history>
-            <kind>KEEP_LAST_HISTORY_QOS</kind>
-            <depth>1</depth>
-          </history>
-        </DataReaderQos>
+        
       </DataReader>
     </DataReaders>
   </DomainParticipant>
