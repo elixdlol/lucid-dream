@@ -1,11 +1,9 @@
-﻿using Newtonsoft.Json;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
+﻿using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TrackBeamParser
+namespace LiveAudioPlayer
 {
     public static class RabbitMQConnection
     {
@@ -25,7 +23,7 @@ namespace TrackBeamParser
 
         internal static IConnection getConnection()
         {
-                return connection;
+            return connection;
         }
 
         public static void dispose()

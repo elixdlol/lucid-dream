@@ -13,6 +13,9 @@ namespace TrackBeamParser
             //retreive the actual beams from the BeamBuffer
             byte[][] beamArray = BeamsBuffer.getBeamsAndFlush();
 
+            if (beamArray == null)
+                return;
+
             foreach (var track in trackData.systemTracks)
             {
                 TrackBeamData trackBeamData = CalcBeams(track.trackID, heading, track.relativeBearing, beamArray);

@@ -13,8 +13,8 @@ namespace BestTrackBeamSticher
         {
             var factory = new ConnectionFactory()
             {
-                HostName = "172.16.20.161",
-                UserName = "rutush",
+                HostName = "172.16.20.53",
+                UserName = "ferasg",
                 Password = "123456",
             };
 
