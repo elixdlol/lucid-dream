@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace LiveAudioPlayer
 {
@@ -38,11 +39,13 @@ namespace LiveAudioPlayer
 
                     if (trackChanged)
                     {
+                        // start playing the audio with delay to avoid getting to end of stream before the next stream part
+                        Thread.Sleep(100);
                         var provider = new RawSourceWaveStream(stream, waveFormat);
                         player.Init(provider);
                         player.Play();
                         trackChanged = false;
-                        Console.WriteLine($"Start playing live audio of track: {currentPlayingTrackId}");
+                        Console.WriteLine($"Now playing track: {currentPlayingTrackId}");
                     }
                 }
             }
