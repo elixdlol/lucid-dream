@@ -13,8 +13,8 @@ namespace LucidDreamSystem
 
         public RabbitMQSender()
         {
-            factory.HostName = "172.16.20.161";
-            factory.UserName = "rutush";
+            factory.HostName = "172.16.20.53";
+            factory.UserName = "ferasg";
             factory.Password = "123456";
             
         }
