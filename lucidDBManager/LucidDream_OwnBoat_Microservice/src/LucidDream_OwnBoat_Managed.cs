@@ -263,7 +263,7 @@ namespace LucidDreamSystem
         {
             OwnBoat_OriginalMessage converted_data = ConvertData(dataType);
             string data = JsonConvert.SerializeObject(converted_data);
-            rabbit.send_data(data);
+            rabbit.SendData(data);
             Console.WriteLine("a new sample of \"idde_itfmod_to_3pa_own_boat_data_type\" has arrived");
         }
 
@@ -277,6 +277,7 @@ namespace LucidDreamSystem
         #endregion
         #endregion
 
+        #region ConvertClass
         public OwnBoat_OriginalMessage ConvertData(idde_itfmod_to_3pa_own_boat_data_type message)
         {
             OwnBoat_OriginalMessage newDataClass = new OwnBoat_OriginalMessage();
@@ -450,8 +451,8 @@ namespace LucidDreamSystem
             return newDataClass;
 
         }
+        #endregion
     }
-
 
     class SubscriberProgram
     {
