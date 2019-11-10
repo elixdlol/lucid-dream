@@ -105,16 +105,9 @@ namespace LucidDreamSystem
             LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_bdt_track_data.idde_itfmod_to_3pa_bdt_track_data_type idl_idde_itfmod_to_3pa_bdt_track_data_idde_itfmod_to_3pa_bdt_track_data_type = new LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_bdt_track_data.idde_itfmod_to_3pa_bdt_track_data_type();
 
 
-            for (int i = 0; i < 500; i++)
-			{
-				System.Threading.Thread.Sleep(1000);
-
-                //BdtCasDataWriter.Write(idl_idde_itfmod_to_3pa_bdt_track_data_idde_itfmod_to_3pa_bdt_track_data_type);
-
-                //Console.WriteLine("\n****** Samples set #" + i + " was sent ******\n");
-
-                // To dispose some dataType use this code
-                //mySystemClient.SomeDataWriter.Dispose(dataType);
+            while(true)
+            {
+                System.Threading.Thread.Sleep(1000);
             }
         }
 

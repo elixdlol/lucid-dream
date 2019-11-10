@@ -111,16 +111,9 @@ namespace LucidDreamSystem
             LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_own_boat_data.idde_itfmod_to_3pa_own_boat_data_type idl_idde_itfmod_to_3pa_own_boat_data_idde_itfmod_to_3pa_own_boat_data_type = new LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_own_boat_data.idde_itfmod_to_3pa_own_boat_data_type();
 
 
-            for (int i = 0; i < 500; i++)
-			{
-				System.Threading.Thread.Sleep(1000);
-
-                //OwnBoatWriter.Write(idl_idde_itfmod_to_3pa_own_boat_data_idde_itfmod_to_3pa_own_boat_data_type);
-
-                //Console.WriteLine("\n****** Samples set #" + i + " was sent ******\n");
-
-                // To dispose some dataType use this code
-                //mySystemClient.SomeDataWriter.Dispose(dataType);
+            while(true)
+            {
+                System.Threading.Thread.Sleep(1000);
             }
         }
 
