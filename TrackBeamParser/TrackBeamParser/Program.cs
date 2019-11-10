@@ -21,12 +21,10 @@ namespace TrackBeamParser
 
             Thread thread = new Thread(() =>
             {
-                MicroLibrary.MicroTimer microTimer = new MicroLibrary.MicroTimer();
-                microTimer.MicroTimerElapsed +=
-                    new MicroLibrary.MicroTimer.MicroTimerElapsedEventHandler(OnTimedEvent);
-
-                microTimer.Interval = 1000000; // 1000µs = 1ms
-                microTimer.Enabled = true; // Start timer
+                TracksDataReceiver.StartListening((trackData) =>
+                {
+                    BeamMaker.onReceiveTracks(trackData);
+                });
             });
             thread.Start();
 
@@ -58,30 +56,6 @@ namespace TrackBeamParser
             CASSubSegment newCAS = new CASSubSegment(part);
             CASSegmentManger.BufferManger(newCAS);
             i += 1400;
-        }
-
-        private static void OnTimedEvent(object sender,
-                                MicroLibrary.MicroTimerEventArgs timerEventArgs)
-        {
-            var systemTracks = new SystemTracks();
-            systemTracks.timeStamp.seconds = 10;
-
-            var trackData = new TrackData();
-            trackData.trackID = 1;
-            trackData.trackState = State.UpdateTrack;
-            trackData.relativeBearing = 90;
-            trackData.creationTime.day = 3;
-
-            var trackData2 = new TrackData();
-            trackData2.trackID = 2;
-            trackData2.trackState = State.UpdateTrack;
-            trackData2.relativeBearing = 270;
-            trackData2.creationTime.day = 4;
-
-            systemTracks.systemTracks = new List<TrackData>();
-            systemTracks.systemTracks.Add(trackData);
-            systemTracks.systemTracks.Add(trackData2);
-            BeamMaker.onReceiveTracks(systemTracks);
         }
 
         private static void NOP(double durationSeconds)

@@ -19,18 +19,16 @@ namespace LiveAudioPlayer
                 LiveAudioPlayer.CommandRecieved(command);
             });
 
-            Thread.Sleep(7000);
-            string commandDummy = "1";
-            LiveAudioPlayer.CommandRecieved(commandDummy);
-            Thread.Sleep(5000);
-            commandDummy = "2";
-            LiveAudioPlayer.CommandRecieved(commandDummy);
-            Thread.Sleep(5000);
-            commandDummy = "stop";
-            LiveAudioPlayer.CommandRecieved(commandDummy);
-            Thread.Sleep(1000);
-            commandDummy = "1";
-            LiveAudioPlayer.CommandRecieved(commandDummy);
+            playDummyCommands();
+        }
+
+        private static void playDummyCommands()
+        {
+            while (true)
+            {
+                var c = Console.ReadLine();
+                LiveAudioPlayer.CommandRecieved(c);
+            }
         }
     }
 }
