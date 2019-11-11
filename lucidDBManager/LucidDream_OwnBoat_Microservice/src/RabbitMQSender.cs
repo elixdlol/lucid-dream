@@ -17,7 +17,9 @@ namespace LucidDreamSystem
         {
             factory = new ConnectionFactory()
             {
-                HostName = "localhost"
+                HostName = "localhost",
+                UserName = "ferasg",
+                Password = "123456"
                 //HostName = "172.16.20.161",
                 //UserName = "rutush",
                 //Password = "123456"
@@ -28,12 +30,12 @@ namespace LucidDreamSystem
         }
         public void SendData(string data)
         {
-                var body = Encoding.UTF8.GetBytes(data);
-                channel.BasicPublish(exchange: "OwnBoatData",
-                                     routingKey: "",
-                                     basicProperties: null,
-                                     body: body);
-                Console.WriteLine(" [x] Sent {0}", data);               
+            var body = Encoding.UTF8.GetBytes(data);
+            channel.BasicPublish(exchange: "OwnBoatData",
+                                 routingKey: "",
+                                 basicProperties: null,
+                                 body: body);
+            Console.WriteLine(" [x] Sent {0}", data);
         }
     }
 }

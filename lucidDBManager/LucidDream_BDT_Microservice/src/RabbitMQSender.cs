@@ -16,7 +16,9 @@ namespace LucidDreamSystem
         {
             factory = new ConnectionFactory()
             {
-                HostName = "localhost"
+                HostName = "localhost",
+                UserName = "ferasg",
+                Password = "123456"
                 //HostName = "172.16.20.161",
                 //UserName = "rutush",
                 //Password = "123456"
