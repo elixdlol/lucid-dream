@@ -9,38 +9,31 @@ namespace LucidDreamSystem
 {
     class RabbitMQSender
     {
-        ConnectionFactory factory = new ConnectionFactory();
+        private ConnectionFactory factory;
+        private IConnection connection;
+        private IModel channel;
 
         public RabbitMQSender()
         {
-            factory.HostName = "172.16.20.53";
-            factory.UserName = "ferasg";
-            factory.Password = "123456";
-            
-        }
-        public void send_data(string data)
-        {
-
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            factory = new ConnectionFactory()
             {
-                channel.ExchangeDeclare(exchange: "OwnBoatData", type: ExchangeType.Fanout);
-
-                
+                HostName = "localhost"
+                //HostName = "172.16.20.161",
+                //UserName = "rutush",
+                //Password = "123456"
+            };
+            connection = factory.CreateConnection();
+            channel = connection.CreateModel();
+            channel.ExchangeDeclare(exchange: "OwnBoatData", type: ExchangeType.Fanout);
+        }
+        public void SendData(string data)
+        {
                 var body = Encoding.UTF8.GetBytes(data);
                 channel.BasicPublish(exchange: "OwnBoatData",
                                      routingKey: "",
                                      basicProperties: null,
                                      body: body);
-                Console.WriteLine(" [x] Sent {0}", data);
-               
-
-                Console.WriteLine(" Press [enter] to exit.");
-                //Console.ReadLine();
-            }
+                Console.WriteLine(" [x] Sent {0}", data);               
         }
-
-
-
     }
 }

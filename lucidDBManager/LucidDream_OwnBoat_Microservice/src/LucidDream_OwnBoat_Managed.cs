@@ -111,16 +111,9 @@ namespace LucidDreamSystem
             LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_own_boat_data.idde_itfmod_to_3pa_own_boat_data_type idl_idde_itfmod_to_3pa_own_boat_data_idde_itfmod_to_3pa_own_boat_data_type = new LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_own_boat_data.idde_itfmod_to_3pa_own_boat_data_type();
 
 
-            for (int i = 0; i < 500; i++)
-			{
-				System.Threading.Thread.Sleep(1000);
-
-                //OwnBoatWriter.Write(idl_idde_itfmod_to_3pa_own_boat_data_idde_itfmod_to_3pa_own_boat_data_type);
-
-                //Console.WriteLine("\n****** Samples set #" + i + " was sent ******\n");
-
-                // To dispose some dataType use this code
-                //mySystemClient.SomeDataWriter.Dispose(dataType);
+            while(true)
+            {
+                System.Threading.Thread.Sleep(1000);
             }
         }
 
@@ -263,7 +256,7 @@ namespace LucidDreamSystem
         {
             OwnBoat_OriginalMessage converted_data = ConvertData(dataType);
             string data = JsonConvert.SerializeObject(converted_data);
-            rabbit.send_data(data);
+            rabbit.SendData(data);
             Console.WriteLine("a new sample of \"idde_itfmod_to_3pa_own_boat_data_type\" has arrived");
         }
 
@@ -277,6 +270,7 @@ namespace LucidDreamSystem
         #endregion
         #endregion
 
+        #region ConvertClass
         public OwnBoat_OriginalMessage ConvertData(idde_itfmod_to_3pa_own_boat_data_type message)
         {
             OwnBoat_OriginalMessage newDataClass = new OwnBoat_OriginalMessage();
@@ -450,8 +444,8 @@ namespace LucidDreamSystem
             return newDataClass;
 
         }
+        #endregion
     }
-
 
     class SubscriberProgram
     {

@@ -3,16 +3,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using LucidDreamContractManager_Managed;
 using DDS_ManagedShell;
-using LucidDream_DataTypesManaged;
-using LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_nav_data;
 using LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_bdt_track_data;
-using LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_system_target_data;
-using LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_own_boat_data;
-using LucidDream_BTD_Microservice;
 using Newtonsoft.Json;
 
 namespace LucidDreamSystem
@@ -112,16 +105,9 @@ namespace LucidDreamSystem
             LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_bdt_track_data.idde_itfmod_to_3pa_bdt_track_data_type idl_idde_itfmod_to_3pa_bdt_track_data_idde_itfmod_to_3pa_bdt_track_data_type = new LucidDream_DataTypesManaged.idl_idde_itfmod_to_3pa_bdt_track_data.idde_itfmod_to_3pa_bdt_track_data_type();
 
 
-            for (int i = 0; i < 500; i++)
-			{
-				System.Threading.Thread.Sleep(1000);
-
-                //BdtCasDataWriter.Write(idl_idde_itfmod_to_3pa_bdt_track_data_idde_itfmod_to_3pa_bdt_track_data_type);
-
-                //Console.WriteLine("\n****** Samples set #" + i + " was sent ******\n");
-
-                // To dispose some dataType use this code
-                //mySystemClient.SomeDataWriter.Dispose(dataType);
+            while(true)
+            {
+                System.Threading.Thread.Sleep(1000);
             }
         }
 
@@ -265,7 +251,7 @@ namespace LucidDreamSystem
 
             BDT_CAS_OriginalMessage converted_data = ConvertData(dataType);
             string data = JsonConvert.SerializeObject(converted_data);
-            rabbit.send_data(data);
+            rabbit.SendData(data);
             Console.WriteLine("a new sample of \"idde_itfmod_to_3pa_bdt_track_data_type\" has arrived");
         }
 

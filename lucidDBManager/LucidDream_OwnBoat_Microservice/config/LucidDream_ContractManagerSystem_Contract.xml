@@ -81,7 +81,7 @@
     </DataWriters>
     <DataReaders>
       <DataReader name="OwnBoatReader" topicName="OwnBoat">
-       
+        
       </DataReader>
       <DataReader name="NavDataReader" topicName="Nav">
         <DataReaderQos profile="DEFAULT">
