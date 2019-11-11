@@ -27,11 +27,13 @@ namespace lucidDBManager
 
         public void StartReceivingUAG()
         {
+            Console.WriteLine("StartReceivingUAG");
             Receiver.StartRecording();
         }
 
         public void StopReceivingUAG()
         {
+            Console.WriteLine("StopReceivingUAG");
             Receiver.StopRecording();
         }
     }

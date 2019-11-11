@@ -28,19 +28,9 @@ namespace lucidDBManager.mongoDB
             //Database List  
             var dbList = dbClient.ListDatabases().ToList();
 
-            Console.WriteLine("The list of databases are :");
-            foreach (var item in dbList)
-            {
-                Console.WriteLine(item);
-            }
             //Get Database and Collection  
             _db = dbClient.GetDatabase(dbName);
             var collList = _db.ListCollections().ToList();
-            Console.WriteLine("The list of collections are :");
-            foreach (var item in collList)
-            {
-                Console.WriteLine(item);
-            }
         }
 
         public void saveRecord(object message, string collectionName)
