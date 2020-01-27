@@ -1,0 +1,13 @@
+<h4 style="text-align: center;">Track List</h4>
+<ul class="track">
+  <!--
+  <a *ngFor="let track of tracks" (click)="onSelect(track)" [class.selected]="track === selectedtrack">
+    <span href="#" class="list-group-item list-group-item-action">{{track.id}}</span>{{track.name}}
+    </a>
+!-->
+  <li *ngFor="let track of tracks" (click)="onSelect(track)" [class.selected]="track === selectedTrack">
+    <span class="badge">{{track.id}}</span>{{track.name}}
+  </li>
+
+</ul>
+
