@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
 
     // Event: emitted from client
     // Purpose:
-    // 1. start recordi own boat data
+    // 1. start record own boat data
     // 2. start record  track data
     // 3. start record audio
     socket.on('server_startRecording', (msg) => {
