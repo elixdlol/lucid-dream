@@ -1,0 +1,44 @@
+/* HeroesComponent's private CSS styles */
+.track {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+  }
+  .track li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: lightblue;
+    margin: .3em;
+    padding:  3;
+    height: 2.4em;
+    border-radius: 5px;
+  }
+  .track li:hover {
+    color: #607D8B;
+    background-color: lavenderblush;
+    left: .1em;
+  }
+  .track li.selected {
+    background-color: #CFD8DC;
+    color: white;
+  }
+  .track li.selected:hover {
+    background-color: #BBD8DC;
+    color: white;
+  }
+  .track .badge {
+    display: inline-block;
+    font-size: small;
+    color: white;
+    padding: 0.8em 0.7em 0 0.7em;
+    background-color:#405061;
+    line-height: 1em;
+    position: relative;
+    left: 200px;
+    top: -0px;
+    height: 1.8em;
+    margin-right: .8em;
+    border-radius: 5px 5px 5px 5px;
+  }
