@@ -22,6 +22,8 @@ namespace lucidDBManager.RabbitMQ
 
         EventingBasicConsumer OwnBoatConsumer { get; set; }
 
+        EventingBasicConsumer EMCSConsumer { get; set; }
+
         EventingBasicConsumer ActionConsumer { get; set; }
 
         DataHandler DataHandler { get; set; }
@@ -39,6 +41,7 @@ namespace lucidDBManager.RabbitMQ
         {
             InitFromUAGTMAReceiver();
             InitFromUAGOwnBoatReceiver();
+            InitFromUAGEMCSReceiver();
         }
 
         public void StopRecording()
@@ -98,6 +101,31 @@ namespace lucidDBManager.RabbitMQ
             Channel.BasicConsume(queue: "UAGOwnBoatQueue",
                                 autoAck: true,
                                 consumer: OwnBoatConsumer);
+        }
+
+        private void InitFromUAGEMCSReceiver()
+        {
+            Channel = Connection.CreateModel();
+            Channel.ExchangeDeclare(exchange: "EMCSData", type: ExchangeType.Fanout);
+            Channel.QueueDeclare("UAGEMCSQueue");
+            Channel.QueueBind(queue: "UAGEMCSQueue",
+                              exchange: "EMCSData",
+                              routingKey: "");
+            EMCSConsumer = new EventingBasicConsumer(Channel);
+            EMCSConsumer.Received += (model, ea) =>
+            {
+                var body = ea.Body;
+                var message = Encoding.UTF8.GetString(body);
+
+                //OwnBoatOriginalMessage ownMessage = JsonConvert.DeserializeObject<OwnBoatOriginalMessage>(message);
+
+                //DataHandler.ReceiveOwnBoatData(ownMessage);
+            };
+
+
+            Channel.BasicConsume(queue: "UAGEMCSQueue",
+                                autoAck: true,
+                                consumer: EMCSConsumer);
         }
 
         private void InitFromGUIActionReceiver()
